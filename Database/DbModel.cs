@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace INDUSTRY_PROJECT.Database
 {
-    public class Database : DbContext
+    public class DbModel : DbContext
     {
-        private string connectionString = "connections string here";
+        private string connectionString = "connection string here";
 
         public DbSet<UserAccount> UserAccount { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Feature> Feature { get; set; }
+        public DbSet<PermissionFeature> PermissionFeatures { get; set; }
         public DbSet<TimeStamp> TimeStamps { get; set; }
         public DbSet<GoogleAnalytics> GoogleAnalytics { get; set; }
         public DbSet<ComissionFactory> ComissionFactory { get; set; }
@@ -24,9 +25,9 @@ namespace INDUSTRY_PROJECT.Database
             optionsBuilder.UseMySql(connectionString);
         }
 
-        public void Create()
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Database.EnsureCreated();
+            modelBuilder.Entity<PermissionFeature>().HasKey(sc => new { sc.PermissionID, sc.FeatureID });
         }
     }
 
@@ -50,14 +51,23 @@ namespace INDUSTRY_PROJECT.Database
         public string Description { get; set; }
 
         public List<UserAccount> Users { get; set; }
-        public List<Feature> Features { get; set; }
+        public List<PermissionFeature> Features { get; set; }
     }
 
     public class Feature{
         public int FeatureID { get; set; }
         public string FeatureName { get; set; }
 
-        public List<Permission> Permissions { get; set; }
+        public List<PermissionFeature> Permissions { get; set; }
+    }
+
+    public class PermissionFeature
+    {
+        public int PermissionID { get; set; }
+        public Permission Permission { get; set; }
+
+        public int FeatureID { get; set; }
+        public Feature Feature { get; set; }
     }
 
     public class TimeStamp{

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using INDUSTRY_PROJECT.Database;
 
 namespace INDUSTRY_PROJECT
 {
@@ -14,6 +15,9 @@ namespace INDUSTRY_PROJECT
     {
         public static void Main(string[] args)
         {
+            using( var db = new DbModel()){
+                db.Database.EnsureCreated();
+            }
             CreateWebHostBuilder(args).Build().Run();
         }
 
