@@ -18,6 +18,9 @@ namespace INDUSTRY_PROJECT
             using( var db = new DbModel()){
                 db.Database.EnsureCreated();
             }
+
+            //DataGen.GenerateDummyData(); //for testing db, uncomment and run for testing db
+
             CreateWebHostBuilder(args).Build().Run();
         }
 

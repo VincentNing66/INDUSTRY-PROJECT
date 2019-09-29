@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace INDUSTRY_PROJECT.Database
 {
     public class DbModel : DbContext
     {
-        private string connectionString = "connection string here";
+        private string connectionString = "redacted for security";
 
         public DbSet<UserAccount> UserAccount { get; set; }
         public DbSet<Permission> Permissions { get; set; }
@@ -32,7 +33,8 @@ namespace INDUSTRY_PROJECT.Database
     }
 
 
-    public class UserAccount{
+    public class UserAccount
+    {
         public int UserAccountID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -45,7 +47,8 @@ namespace INDUSTRY_PROJECT.Database
         public Permission Permissions { get; set; }
     }
 
-    public class Permission{
+    public class Permission
+    {
         public int PermissionID { get; set; }
         public string PermissionName { get; set; }
         public string Description { get; set; }
@@ -54,7 +57,8 @@ namespace INDUSTRY_PROJECT.Database
         public List<PermissionFeature> Features { get; set; }
     }
 
-    public class Feature{
+    public class Feature
+    {
         public int FeatureID { get; set; }
         public string FeatureName { get; set; }
 
@@ -70,7 +74,8 @@ namespace INDUSTRY_PROJECT.Database
         public Feature Feature { get; set; }
     }
 
-    public class TimeStamp{
+    public class TimeStamp
+    {
         public int TimeStampID { get; set; }
         public DateTime TimeStampValue { get; set; }
 
@@ -80,12 +85,15 @@ namespace INDUSTRY_PROJECT.Database
         public List<PepperJam> PepperJam { get; set; }
     }
 
-    public class GoogleAnalytics{
-        public int GoogleAnalyticsID { get; set; }
-        public string Users { get; set; }
-        public string Sessions { get; set; }
-        public string BounceRate { get; set; }
-        public string AvgSessionDuration { get; set; }
+    public class GoogleAnalytics
+    {
+        [Key]
+        public int ResponseID { get; set; }
+
+        public int Users { get; set; }
+        public int Sessions { get; set; }
+        public float BounceRate { get; set; }
+        public int AvgSessionDuration { get; set; }
         public string Source { get; set; }
         public string Country { get; set; }
 
@@ -93,8 +101,11 @@ namespace INDUSTRY_PROJECT.Database
         public TimeStamp TimeStamp { get; set; }
     }
 
-    public class ComissionFactory{
-        public int ComissionFactoryID { get; set; }
+    public class ComissionFactory
+    {
+        [Key]
+        public int ResponseID { get; set; }
+
         public int MerchantID { get; set; }
         public string MerchantName { get; set; }
         public string MerchantAvatarURL { get; set; }
@@ -116,8 +127,11 @@ namespace INDUSTRY_PROJECT.Database
         public TimeStamp TimeStamp { get; set; }
     }
 
-    public class ShareASale{
-        public int ShareASaleID { get; set; }
+    public class ShareASale
+    {
+        [Key]
+        public int ResponseID { get; set; }
+
         public string CurrentStatus { get; set; }
         public int UniqueHits { get; set; }
         public float TodaysSales { get; set; }
@@ -137,8 +151,11 @@ namespace INDUSTRY_PROJECT.Database
         public TimeStamp TimeStamp { get; set; }
     }
 
-    public class PepperJam{
-        public int PepperJamID {get; set; }
+    public class PepperJam
+    {
+        [Key]
+        public int ResponseID {get; set; }
+
         public int PaymentID { get; set; }
         public string Method { get; set; }
         public string Notes { get; set; }
