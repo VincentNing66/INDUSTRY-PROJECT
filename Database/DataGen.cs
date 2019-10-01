@@ -15,7 +15,7 @@ namespace INDUSTRY_PROJECT.Database
             rand = new Random();
 
             int Usercount = 10;
-            int Calls = 20;
+            int Calls = 200;
             int Responses = 1;
 
             using(var db = new DbModel())
@@ -50,12 +50,12 @@ namespace INDUSTRY_PROJECT.Database
         {
             UserAccount user = new UserAccount()
             {
-                Username = GenerateString(10),
+                Username = GenerateString(15),
                 FirstName = GenerateString(10),
                 LastName = GenerateString(10),
-                Password = GenerateString(8),
-                Address = GenerateString(10),
-                EmailAddress = GenerateString(14)
+                Password = GenerateString(15),
+                Address = GenerateString(30),
+                EmailAddress = GenerateString(20)
             };
             return user;
         }
@@ -65,7 +65,7 @@ namespace INDUSTRY_PROJECT.Database
             Permission permission = new Permission()
             {
                 PermissionName = GenerateString(10),
-                Description = GenerateString(20),
+                Description = GenerateString(50),
                 Features = new List<PermissionFeature>()
             };
             return permission;
@@ -115,7 +115,7 @@ namespace INDUSTRY_PROJECT.Database
             ComissionFactory response = new ComissionFactory()
             {
                 MerchantID = GenerateInt(),
-                MerchantName = GenerateString(10),
+                MerchantName = GenerateString(15),
                 MerchantAvatarURL = GenerateString(25),
                 ImpressionsTotal = GenerateInt(),
                 ImpressionsBot = GenerateInt(),
@@ -161,7 +161,7 @@ namespace INDUSTRY_PROJECT.Database
             PepperJam response = new PepperJam()
             {
                 Method = GenerateString(11),
-                Notes = GenerateString(30),
+                Notes = GenerateString(50),
                 Amount = GenerateFloat(),
                 Date = GenerateDate()
             };
@@ -175,7 +175,7 @@ namespace INDUSTRY_PROJECT.Database
 
         public static float GenerateFloat()
         {
-            return (float)(Math.Round((rand.NextDouble() * 10.0), 2));
+            return (float)(Math.Round((rand.NextDouble() * 1000.0), 2));
         }
 
         public static string GenerateString(int length)
