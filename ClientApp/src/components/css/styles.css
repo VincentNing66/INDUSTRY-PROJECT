@@ -4,6 +4,14 @@
 .button {
     width: 500px;
 }
-.cancelbtn {
-    width: 500px;
+
+.center{
+    text-align:center;
+    align-content:center;
+    align-items:center;
 }
+
+.padLeft{
+    padding-left:10px;
+}
+
