@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using INDUSTRY_PROJECT.Database;
+using Newtonsoft.Json;
+using System.IO;
+using System.Text;
 
 namespace INDUSTRY_PROJECT.Controllers
 {
@@ -25,6 +29,30 @@ namespace INDUSTRY_PROJECT.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
         }
+
+        [HttpPost("[action]")]
+        public bool AddUser()
+        {
+            string UserJson = null;
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                UserJson = reader.ReadToEnd();
+            };
+            UserAccount user = JsonConvert.DeserializeObject<UserAccount>(UserJson);
+            using (var db = new DbModel())
+            {
+                db.UserAccount.Add(user);
+                db.SaveChanges();
+            }
+            return true;
+        }
+        //public int UserAccountID { get; set; }
+        //public string Username { get; set; }
+        //public string Password { get; set; }
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
+        //public string Address { get; set; }
+        //public string EmailAddress { get; set; }
 
         public class WeatherForecast
         {
