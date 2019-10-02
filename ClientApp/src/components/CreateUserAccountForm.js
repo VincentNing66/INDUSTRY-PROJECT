@@ -6,13 +6,13 @@ export class CreateUserAccountForm extends Component {
 
     sendUser() {
         var JsonString = `{
-          "username": `+ document.getElementById("username").value; + `,
-          "firstname": `+ document.getElementById("firstname").value; + `,
-          "lastname": `+ document.getElementById("lastname").value; + `,
-          "address": `+ document.getElementById("address").value; + `,
-          "emailAddress":` + document.getElementById("emailAddress").value; + `,
-          "password": `+ document.getElementById("updatePassword").value; + `
-          "PermissionId": 1
+          "Username": "`+ document.getElementById("username").value + `",
+          "FirstName": "`+ document.getElementById("firstname").value + `",
+          "LastName": "`+ document.getElementById("lastname").value + `",
+          "Address": "`+ document.getElementById("address").value + `",
+          "EmailAddress":"` + document.getElementById("emailAddress").value + `",
+          "Password": "`+ document.getElementById("updatePassword").value + `",
+          "PermissionsId": 1
         }`;
         fetch('api/SampleData/addUser', {
             method: 'POST',

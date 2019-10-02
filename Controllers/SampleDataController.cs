@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using INDUSTRY_PROJECT.Database;
 using Newtonsoft.Json;
+using System.IO;
+using System.Text;
 
 namespace INDUSTRY_PROJECT.Controllers
 {
@@ -29,13 +31,18 @@ namespace INDUSTRY_PROJECT.Controllers
         }
 
         [HttpPost("[action]")]
-        public bool AddUser(string UserJson)
+        public bool AddUser()
         {
+            string UserJson = null;
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                UserJson = reader.ReadToEnd();
+            };
             UserAccount user = JsonConvert.DeserializeObject<UserAccount>(UserJson);
             using (var db = new DbModel())
             {
                 db.UserAccount.Add(user);
-                db.SaveChangesAsync();
+                db.SaveChanges();
             }
             return true;
         }

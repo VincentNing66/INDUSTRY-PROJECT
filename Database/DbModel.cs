@@ -9,7 +9,7 @@ namespace INDUSTRY_PROJECT.Database
 {
     public class DbModel : DbContext
     {
-        private string connectionString = "";
+        private string connectionString = "Redacted";
 
         public DbSet<UserAccount> UserAccount { get; set; }
         public DbSet<Permission> Permissions { get; set; }
