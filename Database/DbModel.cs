@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using INDUSTRY_PROJECT.Config;
 
 namespace INDUSTRY_PROJECT.Database
 {
     public class DbModel : DbContext
     {
-        private string connectionString = "Redacted";
+        private string connectionString = Configuration.config.ConnectionString;
 
         public DbSet<UserAccount> UserAccount { get; set; }
         public DbSet<Permission> Permissions { get; set; }
