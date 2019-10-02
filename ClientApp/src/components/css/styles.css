@@ -1,3 +1,21 @@
+
+.inputbox {
+    width: 500px;
+}
+.button {
+    width: 500px;
+}
+
+.center{
+    text-align:center;
+    align-content:center;
+    align-items:center;
+}
+
+.padLeft{
+    padding-left:10px;
+}
+
 .btn.btn-primary {
     width: 80%;
 }
