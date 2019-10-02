@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
+import { EditUserAccountForm } from './components/EditUserAccountForm';
 import { ManageUserAccount } from './components/ManageUserAccount';
 import { CreateUserAccountForm } from './components/CreateUserAccountForm';
 
@@ -17,6 +18,7 @@ export default class App extends Component {
         <Route exact path='/' component={Home} />
         <Route path='/counter' component={Counter} />
         <Route path='/fetch-data' component={FetchData} />
+        <Route path='/EditUserAccount' component={EditUserAccountForm} />
         <Route path='/ManageUserAccount' component={ManageUserAccount} />
         <Route path='/CreateUserAccount' component={CreateUserAccountForm} />
       </Layout>
