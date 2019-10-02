@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using INDUSTRY_PROJECT.Database;
+using INDUSTRY_PROJECT.Config;
 
 namespace INDUSTRY_PROJECT
 {
@@ -15,6 +16,7 @@ namespace INDUSTRY_PROJECT
     {
         public static void Main(string[] args)
         {
+            Configuration.configure();
             using( var db = new DbModel()){
                 db.Database.EnsureCreated();
             }
