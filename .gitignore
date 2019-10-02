@@ -350,4 +350,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/ClientApp/src/components/CreateUserAccountForm.js
+
+_config.json
