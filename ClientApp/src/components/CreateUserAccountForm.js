@@ -4,23 +4,67 @@ import './css/styles.css';
 export class CreateUserAccountForm extends Component {
     static displayName = CreateUserAccountForm.name;
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            perms: []
+        }
+    }
+    componentDidMount() {
+        fetch('/api/SampleData/getPermissions').then(result => this.setState({ perms: result.getPermissions }));
+            //.then(response => response.json())
+            //.then(result => this.setState(
+            //    { perms: result.getPermissions }))
+    }
+
+    //This method is triggered on page load to get all permissions from the database and populate a dropdownbox for the user to select permission.
+    //getPermissions() {
+    //    try {
+
+    //    }
+    //    catch (Exception) {
+    //        //Something went wrong with the API request
+    //        var random = 0;
+    //    }
+    //}
+
+    //This method is triggered when the "save" button is clicked. It sends data from the form to the database. 
     sendUser() {
-        var JsonString = `{
-          "Username": "`+ document.getElementById("username").value + `",
-          "FirstName": "`+ document.getElementById("firstname").value + `",
-          "LastName": "`+ document.getElementById("lastname").value + `",
-          "Address": "`+ document.getElementById("address").value + `",
-          "EmailAddress":"` + document.getElementById("emailAddress").value + `",
-          "Password": "`+ document.getElementById("updatePassword").value + `",
-          "PermissionsId": 1
-        }`;
-        fetch('api/SampleData/addUser', {
-            method: 'POST',
-            body: JsonString,
-            headers: {
-                'Content-Type': 'application/json'
+        var uname = document.getElementById("username").value;
+        var fname = document.getElementById("firstname").value;
+        var lname = document.getElementById("lastname").value;
+        var address = document.getElementById("address").value;
+        var email = document.getElementById("emailAddress").value;
+        var pword = document.getElementById("updatePassword").value;
+        var confirm_pword = document.getElementById("confirmPassword").value;
+        //If the password and confirm password fields are the same
+        if (pword === confirm_pword) {
+            var JsonString = `{
+              "Username": "`+ uname + `",
+              "FirstName": "`+ fname + `",
+              "LastName": "`+ lname + `",
+              "Address": "`+ address + `",
+              "EmailAddress":"` + email + `",
+              "Password": "`+ pword + `",
+              "PermissionsId": 1
+            }`;
+            try {
+                fetch('api/SampleData/addUser', {
+                    method: 'POST',
+                    body: JsonString,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
             }
-        });
+            catch (Exception) {
+                //Something went wrong with the API request
+                var random = 0;
+            }
+        }
+        else {
+            window.alert("Unable to create new user. The entered password and confirm password does not match. Try again.");
+        }
     }
 
   render () {
@@ -33,19 +77,19 @@ export class CreateUserAccountForm extends Component {
                 <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" required ></input>
                 <br></br>
                 <label htmlFor="firstname"><b>First Name:</b></label><br></br>
-                <input className="form-control" type="text" placeholder="Enter First Name" name="firstname" id="firstname" required ></input>
+                <input className="form-control" type="text" placeholder="Enter First Name" name="firstname" id="firstname" ></input>
                 <br></br>
                 <label htmlFor="lastname"><b>Last Name:</b></label><br></br>
-                <input className="form-control" type="text" placeholder="Enter Last Name" name="lastname" id="lastname" required ></input>
+                <input className="form-control" type="text" placeholder="Enter Last Name" name="lastname" id="lastname" ></input>
                 <br></br>
                 <label htmlFor="address"><b>Address:</b></label><br></br>
-                <input className="form-control" type="text" placeholder="Enter Address" name="address" id="address" required ></input>
+                <input className="form-control" type="text" placeholder="Enter Address" name="address" id="address" ></input>
                 <br></br>
                 <label htmlFor="emailAddress"><b>Email Address:</b></label><br></br>
                 <input className="form-control" type="text" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" required ></input>
                 <br></br>
-                <label htmlFor="permission"><b>Permission</b></label><br></br>
-                <input className="form-control" type="text" placeholder="Permission" name="permission" id="permission" required ></input>
+                <label htmlFor="permission"><b>Select Permission:</b></label><br></br>
+                <select name="permissions" id="permissions" options={this.state.perms} onChange={(values) => this.setValues(values)} placeholder="Permission" className="form-control" required></select>
                 <hr></hr>
                 <button type="button" name="generatePassword" id="generatePassword" className="btn btn-primary">Generate Temporary Password</button>
                 <br></br><br></br>

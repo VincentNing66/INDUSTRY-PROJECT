@@ -46,13 +46,18 @@ namespace INDUSTRY_PROJECT.Controllers
             }
             return true;
         }
-        //public int UserAccountID { get; set; }
-        //public string Username { get; set; }
-        //public string Password { get; set; }
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
-        //public string Address { get; set; }
-        //public string EmailAddress { get; set; }
+
+        [HttpPost("[action]")]
+        public List<Permission> GetPermissions()
+        {
+            //To retrieve all permissions from the database
+            using (var db = new DbModel())
+            {
+                List<Permission> permissions = db.Permissions.Select(x => x).ToList();
+                return permissions;
+            }
+        }
+
 
         public class WeatherForecast
         {
