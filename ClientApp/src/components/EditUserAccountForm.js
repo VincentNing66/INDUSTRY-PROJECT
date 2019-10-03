@@ -3,7 +3,17 @@ import './css/style.css';
 
 export class EditUserAccountForm extends Component {
     static displayName = EditUserAccountForm.name;
+    constructor(props) {
+        super(props);
+        this.state = {
+            userDetail: [], loading: true
+        };
+        //To get all the user's details from the database on load of this page
+        fetch('/api/SampleData/getUserAccountDetails')
+            .then(response => response.json())
+            .then(data => this.setState({ userDetail: data, loading: false }))
 
+    }
     //This method is triggered when the "save" button is clicked. It sends data from the form to the database.
     updateUser() {
         var uname = document.getElementById("username").value;
@@ -42,6 +52,11 @@ export class EditUserAccountForm extends Component {
             window.alert("Unable to update user account. The entered password and confirm password does not match. Try again.");
         }
     }
+    //To autopopulate the form with current details of the user. 
+    populateForm() {
+
+    }
+
   render () {
     return (
         <div className="container col-lg-12 justify-content-center">
