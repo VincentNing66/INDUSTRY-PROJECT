@@ -47,13 +47,13 @@ namespace INDUSTRY_PROJECT.Controllers
             return true;
         }
 
-        [HttpPost("[action]")]
+        [HttpGet("[action]")]
         public List<Permission> GetPermissions()
         {
             //To retrieve all permissions from the database
             using (var db = new DbModel())
             {
-                List<Permission> permissions = db.Permissions.Select(x => x).ToList();
+                List<Permission> permissions = db.Permissions.ToList();
                 return permissions;
             }
         }

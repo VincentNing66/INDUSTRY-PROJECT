@@ -7,28 +7,18 @@ export class CreateUserAccountForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            perms: []
-        }
-    }
-    componentDidMount() {
-        fetch('/api/SampleData/getPermissions').then(result => this.setState({ perms: result.getPermissions }));
-            //.then(response => response.json())
-            //.then(result => this.setState(
-            //    { perms: result.getPermissions }))
-    }
+            perms: [], loading: true
+        };
+        fetch('/api/SampleData/getPermissions')
+        .then(response => response.json())
+            .then(data => this.setState({ perms: data, loading: false }))
 
+    }
     //This method is triggered on page load to get all permissions from the database and populate a dropdownbox for the user to select permission.
-    //getPermissions() {
-    //    try {
-
-    //    }
-    //    catch (Exception) {
-    //        //Something went wrong with the API request
-    //        var random = 0;
-    //    }
+    //componentDidMount() {
+        
     //}
 
-    //This method is triggered when the "save" button is clicked. It sends data from the form to the database. 
     sendUser() {
         var uname = document.getElementById("username").value;
         var fname = document.getElementById("firstname").value;
@@ -67,49 +57,62 @@ export class CreateUserAccountForm extends Component {
         }
     }
 
-  render () {
-    return (
-        <div className="col-lg-8">
-            <h1>Create User Account</h1>
-            <hr></hr>
-            <form action="action_page.php" method="post">
-                <label htmlFor="username"><b>Username:</b></label>
-                <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" required ></input>
-                <br></br>
-                <label htmlFor="firstname"><b>First Name:</b></label><br></br>
-                <input className="form-control" type="text" placeholder="Enter First Name" name="firstname" id="firstname" ></input>
-                <br></br>
-                <label htmlFor="lastname"><b>Last Name:</b></label><br></br>
-                <input className="form-control" type="text" placeholder="Enter Last Name" name="lastname" id="lastname" ></input>
-                <br></br>
-                <label htmlFor="address"><b>Address:</b></label><br></br>
-                <input className="form-control" type="text" placeholder="Enter Address" name="address" id="address" ></input>
-                <br></br>
-                <label htmlFor="emailAddress"><b>Email Address:</b></label><br></br>
-                <input className="form-control" type="text" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" required ></input>
-                <br></br>
-                <label htmlFor="permission"><b>Select Permission:</b></label><br></br>
-                <select name="permissions" id="permissions" options={this.state.perms} onChange={(values) => this.setValues(values)} placeholder="Permission" className="form-control" required></select>
+    render() {
+        let contents = this.state.loading
+            ? <p><em>Loading...</em></p>
+            : CreateUserAccountForm.renderForm(this.state.perms);
+
+        return (
+            <div className="col-lg-8">
+                <h1>Create User Account</h1>
                 <hr></hr>
-                <button type="button" name="generatePassword" id="generatePassword" className="btn btn-primary">Generate Temporary Password</button>
-                <br></br><br></br>
-                <label htmlFor="updatePassword"><b>Password:</b></label><br></br>
-                <input className="form-control" type="password" placeholder="Update Password" name="permission" id="updatePassword" required ></input>
-                <br></br>
-                <label htmlFor="confirmPassword"><b>Confirm Password:</b></label><br></br>
-                <input className="form-control" type="password" placeholder="Confirm New Password" name="confirmPassword" id="confirmPassword" required ></input>
-                <br></br>
-                <div className="justify-content-center row">
-                    <div className="col-lg-6 col-sm-12 text-center">
-                        <button type="button" name="save" onClick={this.sendUser} id="save" className="btn btn-primary">Save</button>
-                    </div>
-                    <div className="col-lg-6 col-sm-12 text-center">
-                        <button type="button" name="cancel" id="cancel" className="btn btn-primary">Cancel</button>
-                    </div>
+                <form action="action_page.php" method="post">
+                    <label htmlFor="username"><b>Username:</b></label>
+                    <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" required ></input>
                     <br></br>
-                </div>
-            </form>
-        </div>
-    );
+                    <label htmlFor="firstname"><b>First Name:</b></label><br></br>
+                    <input className="form-control" type="text" placeholder="Enter First Name" name="firstname" id="firstname" ></input>
+                    <br></br>
+                    <label htmlFor="lastname"><b>Last Name:</b></label><br></br>
+                    <input className="form-control" type="text" placeholder="Enter Last Name" name="lastname" id="lastname" ></input>
+                    <br></br>
+                    <label htmlFor="address"><b>Address:</b></label><br></br>
+                    <input className="form-control" type="text" placeholder="Enter Address" name="address" id="address" ></input>
+                    <br></br>
+                    <label htmlFor="emailAddress"><b>Email Address:</b></label><br></br>
+                    <input className="form-control" type="text" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" required ></input>
+                    <br></br>
+                    <label htmlFor="permission"><b>Select Permission:</b></label><br></br>
+                    {contents}
+                    <hr></hr>
+                    <button type="button" name="generatePassword" id="generatePassword" className="btn btn-primary">Generate Temporary Password</button>
+                    <br></br><br></br>
+                    <label htmlFor="updatePassword"><b>Password:</b></label><br></br>
+                    <input className="form-control" type="password" placeholder="Update Password" name="permission" id="updatePassword" required ></input>
+                    <br></br>
+                    <label htmlFor="confirmPassword"><b>Confirm Password:</b></label><br></br>
+                    <input className="form-control" type="password" placeholder="Confirm New Password" name="confirmPassword" id="confirmPassword" required ></input>
+                    <br></br>
+                    <div className="justify-content-center row">
+                        <div className="col-lg-6 col-sm-12 text-center">
+                            <button type="button" name="save" onClick={this.sendUser} id="save" className="btn btn-primary">Save</button>
+                        </div>
+                        <div className="col-lg-6 col-sm-12 text-center">
+                            <button type="button" name="cancel" id="cancel" className="btn btn-primary">Cancel</button>
+                        </div>
+                        <br></br>
+                    </div>
+                </form>
+            </div>);
     }
-}
+
+  static renderForm(permissions) {
+    return (
+        {
+            permissions.map(permission =>
+            <tr key={permission.PermissionID}>
+                <td>{permission.PermissionID}</td>
+                <td>{permission.PermissionName}</td>
+            </tr>)
+        };
+  }
