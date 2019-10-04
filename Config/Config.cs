@@ -9,7 +9,8 @@ namespace INDUSTRY_PROJECT.Config
 {
     public class ConfigModel
     {
-        public string ConnectionString { get; set; } 
+        public string ConnectionString { get; set; }
+        public string CFKey { get; set; }
     }
     public class Configuration
     {

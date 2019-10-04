@@ -21,6 +21,7 @@ namespace INDUSTRY_PROJECT
                 db.Database.EnsureCreated();
             }
 
+            //API.ComissionFactory.CallComissionFactory(); //calls api and saves to db
             //DataGen.GenerateDummyData(); //for testing db, uncomment and run for testing db
 
             CreateWebHostBuilder(args).Build().Run();
