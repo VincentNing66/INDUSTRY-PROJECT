@@ -39,12 +39,12 @@ namespace INDUSTRY_PROJECT.Controllers
             //To retrieve all details of a single user from the database
             using (var db = new DbModel())
             {
-                UserAccount userDetails = db.UserAccount.Where(x=>x.UserAccountID==userID).ToList().First();
+                UserAccount userDetails = db.UserAccount.Where(x=>x.UserAccountID== userID).ToList().First();
                 return userDetails;
             }
         }
         [HttpPost("[action]")]
-        public bool updateUser()
+        public bool updateUserAccount()
         {
             string UserJson = null;
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
