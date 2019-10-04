@@ -3,6 +3,34 @@ import "./css/styles.css";
 
 export class LoginForm extends Component {
     static displayName = LoginForm.name;
+    constructor(props) {
+        super(props);
+        this.state = {
+            userDetail: [], loading: true
+        };
+        //I don't know what this does stackoverflow suggested it
+        this.userLogin = this.userLogin.bind(this);
+    }
+    userLogin(userDetail)
+    {
+        //console.log(userDetail) //  for testing - doesnt work
+        console.log(this.state) // for testing
+        console.log(this.state.userDetail) //  for testing
+        //To get the the username and password on from the user login form
+        var user = document.getElementById("username").value;
+        var pass = document.getElementById("password").value;
+        //The request to get the user account where the username and password matches the input
+        fetch('api/SampleData/getUserAccountDetailsForLogin?Username=' + user +'&Password='+pass) 
+            .then(response => response.json())
+            .then(data => this.setState({ userDetail: data, loading: false }));
+        //To check that the response has returned a valid user account detail
+        //userDetail.forEach(function (entry) {
+        //    alert(entry);
+        //});for testing - doesnt work
+        //console.log(userDetail) //  for testing - doesnt work
+        console.log(this.state) // for testing
+        console.log(this.state.userDetail) //  for testing
+    }
 
     render() {
         return (
@@ -14,13 +42,13 @@ export class LoginForm extends Component {
                     </div>
                     <div class="container justify-content-center">
                         <label for="username"><b>Username</b></label><br></br>
-                        <input className="inputbox" type="text" placeholder="Enter Username" name="username" required></input>
+                        <input className="inputbox" type="text" placeholder="Enter Username" id="username" required></input>
                         <br></br>
                         <label for="password"><b>Password</b></label><br></br>
-                        <input className="inputbox" type="password" placeholder="Enter Password" name="password" required ></input>
+                        <input className="inputbox" type="password" placeholder="Enter Password" id="password" required ></input>
                         <br></br>
                         <br></br>
-                        <button className="btn btn-primary button" type="button">Login</button>
+                        <button className="btn btn-primary button" type="button" name="login" id="login" onClick={this.userLogin}>Login</button>
                         <br></br>
                         <br></br>
                         <div className="row justify-content-center">
