@@ -21,6 +21,7 @@ namespace INDUSTRY_PROJECT
                 db.Database.EnsureCreated();
             }
 
+            //API.ComissionFactory.CallComissionFactory(); //calls api and saves to db
             //DataGen.GenerateDummyData(); //for testing db, uncomment and run for testing db
             //API.ComissionFactory.CallComissionFactory(); //calls api and saves to db
             //API.ShareASaleAPI.CallShareASale(); //calls api and saves to db
