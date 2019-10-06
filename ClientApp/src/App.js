@@ -20,6 +20,7 @@ export default class App extends Component {
         <Route exact path='/' component={Home} />
         <Route path='/counter' component={Counter} />
         <Route path='/fetch-data' component={FetchData} />
+        <Route path='/CreateUserAccount' component={CreateUserAccountForm}/>
         <Route path='/LoginForm' component={LoginForm} />
         <Route path='/EditUserAccount' component={EditUserAccountForm} />
         <Route path='/ManageUserAccount' component={ManageUserAccount} />
