@@ -8,6 +8,7 @@ import { LoginForm } from './components/LoginForm';
 import { EditUserAccountForm } from './components/EditUserAccountForm';
 import { ManageUserAccount } from './components/ManageUserAccount';
 import { CreateUserAccountForm } from './components/CreateUserAccountForm';
+import { DashboardMain } from './components/DashboardMain';
 
 
 export default class App extends Component {
@@ -23,6 +24,7 @@ export default class App extends Component {
         <Route path='/EditUserAccount' component={EditUserAccountForm} />
         <Route path='/ManageUserAccount' component={ManageUserAccount} />
         <Route path='/CreateUserAccount' component={CreateUserAccountForm} />
+        <Route path='/DashboardMain' component={DashboardMain} />
       </Layout>
     );
   }
