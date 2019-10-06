@@ -46,13 +46,19 @@ namespace INDUSTRY_PROJECT.Controllers
             }
             return true;
         }
-        //public int UserAccountID { get; set; }
-        //public string Username { get; set; }
-        //public string Password { get; set; }
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
-        //public string Address { get; set; }
-        //public string EmailAddress { get; set; }
+
+        #region LoginForm
+        [HttpGet("[action]")]
+        public UserAccount GetUserAccountDetailsForLogin(string username, string password)
+        {
+            //To retrieve all details of a single user from the database where the username and password matches an account. 
+            using (var db = new DbModel())
+            {
+                UserAccount userDetails = db.UserAccount.Where(x => x.Username == username && x.Password==password).ToList().First();
+                return userDetails;
+            }
+        }
+        #endregion
 
         public class WeatherForecast
         {
