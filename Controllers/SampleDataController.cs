@@ -13,6 +13,55 @@ namespace INDUSTRY_PROJECT.Controllers
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
+        #region CreateUserAccount GET & POST Methods
+        [HttpPost("[action]")]
+        public bool AddUser()
+        {
+            string UserJson = null;
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                UserJson = reader.ReadToEnd();
+            };
+            UserAccount user = JsonConvert.DeserializeObject<UserAccount>(UserJson);
+            using (var db = new DbModel())
+            {
+                db.UserAccount.Add(user);
+                db.SaveChanges();
+            }
+            return true;
+        }
+        #endregion
+
+        #region EditUserAccount GET & POST Methods
+        [HttpGet("[action]")]
+        public UserAccount GetUserAccountDetails(int userID)
+        {
+            //To retrieve all details of a single user from the database
+            using (var db = new DbModel())
+            {
+                UserAccount userDetails = db.UserAccount.Where(x=>x.UserAccountID== userID).ToList().First();
+                return userDetails;
+            }
+        }
+        [HttpPost("[action]")]
+        public bool updateUserAccount()
+        {
+            string UserJson = null;
+            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                UserJson = reader.ReadToEnd();
+            };
+            UserAccount user = JsonConvert.DeserializeObject<UserAccount>(UserJson);
+            using (var db = new DbModel())
+            {
+                db.UserAccount.Update(user);
+                db.SaveChanges();
+            }
+            return true;
+        }
+        #endregion
+
+        #region Sample Controller
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -30,30 +79,30 @@ namespace INDUSTRY_PROJECT.Controllers
             });
         }
 
-        [HttpPost("[action]")]
-        public bool AddUser()
+        #region LoginForm
+        [HttpGet("[action]")]
+        public UserAccount GetUserAccountDetailsForLogin(string username, string password)
         {
-            string UserJson = null;
-            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
-            {
-                UserJson = reader.ReadToEnd();
-            };
-            UserAccount user = JsonConvert.DeserializeObject<UserAccount>(UserJson);
+            //To retrieve all details of a single user from the database where the username and password matches an account. 
             using (var db = new DbModel())
             {
-                db.UserAccount.Add(user);
-                db.SaveChanges();
+                UserAccount userDetails = db.UserAccount.Where(x => x.Username == username && x.Password==password).ToList().First();
+                return userDetails;
             }
-            return true;
         }
-        //public int UserAccountID { get; set; }
-        //public string Username { get; set; }
-        //public string Password { get; set; }
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
-        //public string Address { get; set; }
-        //public string EmailAddress { get; set; }
 
+        [HttpGet("[action]")]
+        public List<Permission> GetPermissions()
+        {
+            //To retrieve all permissions from the database
+            using (var db = new DbModel())
+            {
+                List<Permission> permissions = db.Permissions.ToList();
+                return permissions;
+            }
+        }
+
+        #endregion
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }
@@ -68,5 +117,6 @@ namespace INDUSTRY_PROJECT.Controllers
                 }
             }
         }
+        #endregion
     }
 }

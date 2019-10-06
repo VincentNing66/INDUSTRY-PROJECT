@@ -23,6 +23,8 @@ namespace INDUSTRY_PROJECT
 
             //API.ComissionFactory.CallComissionFactory(); //calls api and saves to db
             //DataGen.GenerateDummyData(); //for testing db, uncomment and run for testing db
+            //API.ComissionFactory.CallComissionFactory(); //calls api and saves to db
+            //API.ShareASaleAPI.CallShareASale(); //calls api and saves to db
 
             CreateWebHostBuilder(args).Build().Run();
         }
