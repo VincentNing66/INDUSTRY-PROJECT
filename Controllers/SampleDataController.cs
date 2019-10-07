@@ -86,7 +86,20 @@ namespace INDUSTRY_PROJECT.Controllers
             //To retrieve all details of a single user from the database where the username and password matches an account. 
             using (var db = new DbModel())
             {
-                UserAccount userDetails = db.UserAccount.Where(x => x.Username.ToLower() == username.ToLower() && x.Password==password).ToList().First();
+                UserAccount userDetails;
+                List<UserAccount> userDetailsList = db.UserAccount.Where(x => x.Username.ToLower() == username.ToLower() && x.Password==password).ToList();
+                if(userDetailsList.Count == 0)
+                {
+                    userDetails = new UserAccount()
+                    {
+                        UserAccountID = 0,
+                        Username = "undefined"
+                    };
+                }
+                else
+                {
+                    userDetails = userDetailsList.First();
+                }
                 return userDetails;
             }
         }
