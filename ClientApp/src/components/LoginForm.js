@@ -34,7 +34,7 @@ export class LoginForm extends Component {
 
     render() {
         return (
-            <div className="container justify-content-center col-md-12 center">
+            <div className="container justify-content-center col-md-12 center loginform">
                 <h1>Log Into Dashboard</h1>
                 <form action="action_page.php" method="post">
                     <div>

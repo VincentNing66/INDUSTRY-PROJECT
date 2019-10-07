@@ -103,6 +103,18 @@ namespace INDUSTRY_PROJECT.Controllers
                 return userDetails;
             }
         }
+
+        [HttpGet("[action]")]
+        public List<Permission> GetPermissions()
+        {
+            //To retrieve all permissions from the database
+            using (var db = new DbModel())
+            {
+                List<Permission> permissions = db.Permissions.ToList();
+                return permissions;
+            }
+        }
+
         #endregion
         public class WeatherForecast
         {
