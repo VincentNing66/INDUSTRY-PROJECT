@@ -23,9 +23,21 @@
     height: 200px;
     padding: 20px;
 }
+.m2{
+    margin:20px;
+}
+.m3{
+    margin:30px;
+}
+.m4{
+    margin:40px;
+}
 .generate{
     display: inline-block;
     width: 40%;
+}
+.flowRight{
+    float: Right;
 }
 
 .dashButton{
@@ -33,17 +45,21 @@
     display: block;
     text-align:center;
     margin:0 auto;
-    margin-top: 50px;
+    margin-top: 40px;
 }
 .dates{
     margin: 30px;
-
+}
+.inline{
+    display: inline-block;
 }
 
 .padLeft{
     padding-left:10px;
 }
-
+.w100{
+    width: 100%;
+}
 .buts{
     margin-top: 40%;
 }
