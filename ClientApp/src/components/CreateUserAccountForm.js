@@ -57,52 +57,48 @@ export class CreateUserAccountForm extends Component {
         }
     }
 
-    render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : CreateUserAccountForm.renderForm(this.state.perms);
-
-        return (
-            <div className="col-lg-8">
-                <h1>Create User Account</h1>
-                <hr></hr>
-                <form action="action_page.php" method="post">
-                    <label htmlFor="username"><b>Username:</b></label>
-                    <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" required ></input>
-                    <br></br>
-                    <label htmlFor="firstname"><b>First Name:</b></label><br></br>
-                    <input className="form-control" type="text" placeholder="Enter First Name" name="firstname" id="firstname" ></input>
-                    <br></br>
-                    <label htmlFor="lastname"><b>Last Name:</b></label><br></br>
-                    <input className="form-control" type="text" placeholder="Enter Last Name" name="lastname" id="lastname" ></input>
-                    <br></br>
-                    <label htmlFor="address"><b>Address:</b></label><br></br>
-                    <input className="form-control" type="text" placeholder="Enter Address" name="address" id="address" ></input>
-                    <br></br>
-                    <label htmlFor="emailAddress"><b>Email Address:</b></label><br></br>
-                    <input className="form-control" type="text" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" required ></input>
-                    <br></br>
-                    <label htmlFor="permission"><b>Select Permission:</b></label><br></br>
-                    {contents}
-                    <hr></hr>
-                    <button type="button" name="generatePassword" id="generatePassword" className="btn btn-primary">Generate Temporary Password</button>
-                    <br></br><br></br>
-                    <label htmlFor="updatePassword"><b>Password:</b></label><br></br>
-                    <input className="form-control" type="password" placeholder="Update Password" name="permission" id="updatePassword" required ></input>
-                    <br></br>
-                    <label htmlFor="confirmPassword"><b>Confirm Password:</b></label><br></br>
-                    <input className="form-control" type="password" placeholder="Confirm New Password" name="confirmPassword" id="confirmPassword" required ></input>
-                    <br></br>
-                    <div className="justify-content-center row">
-                        <div className="col-lg-6 col-sm-12 text-center">
-                            <button type="button" name="save" onClick={this.sendUser} id="save" className="btn btn-primary">Save</button>
-                        </div>
-                        <div className="col-lg-6 col-sm-12 text-center">
-                            <button type="button" name="cancel" id="cancel" className="btn btn-primary">Cancel</button>
-                        </div>
-                        <br></br>
-                    </div>
-                </form>
-            </div>);
+  render () {
+    return (
+        <div className="col-lg-8">
+          <h1>Create User Account</h1>
+          <hr></hr>
+          <form>
+                  <label htmlFor="username"><b>Username:</b></label>
+                  <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" required ></input>
+                  <br></br>
+                  <label htmlFor="firstname"><b>First Name:</b></label><br></br>
+                  <input className="form-control" type="text" placeholder="Enter First Name" name="firstname" id="firstname" ></input>
+                  <br></br>
+                  <label htmlFor="lastname"><b>Last Name:</b></label><br></br>
+                  <input className="form-control" type="text" placeholder="Enter Last Name" name="lastname" id="lastname" ></input>
+                  <br></br>
+                  <label htmlFor="address"><b>Address:</b></label><br></br>
+                  <input className="form-control" type="text" placeholder="Enter Address" name="address" id="address" ></input>
+                  <br></br>
+                  <label htmlFor="emailAddress"><b>Email Address:</b></label><br></br>
+                  <input className="form-control" type="text" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" required ></input>
+                  <br></br>
+                  <label htmlFor="permission"><b>Select Permission:</b></label><br></br>
+                  {contents}
+                  <hr></hr>
+                  <button type="button" name="generatePassword" id="generatePassword" className="btn btn-primary">Generate Temporary Password</button>
+                  <br></br><br></br>
+                  <label htmlFor="updatePassword"><b>Password:</b></label><br></br>
+                  <input className="form-control" type="password" placeholder="Update Password" name="permission" id="updatePassword" required ></input>
+                  <br></br>
+                  <label htmlFor="confirmPassword"><b>Confirm Password:</b></label><br></br>
+                  <input className="form-control" type="password" placeholder="Confirm New Password" name="confirmPassword" id="confirmPassword" required ></input>
+                  <br></br>
+                  <div className="justify-content-center row">
+                      <div className="col-lg-6 col-sm-12 text-center">
+                          <button type="button" name="save" onClick={this.sendUser} id="save" className="btn btn-primary">Save</button>
+                      </div>
+                      <div className="col-lg-6 col-sm-12 text-center">
+                          <button type="button" name="cancel" id="cancel" className="btn btn-primary">Cancel</button>
+                      </div>
+                      <br></br>
+                  </div>
+              </form>
+          </div>);
     }
 }
