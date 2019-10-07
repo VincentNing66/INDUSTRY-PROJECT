@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import './css/style.css';
+import { getCookie } from './js/Cookies.js';
 
 export class EditUserAccountForm extends Component {
     static displayName = EditUserAccountForm.name;

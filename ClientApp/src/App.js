@@ -30,7 +30,7 @@ const DefaultContainer = () => (
 
 const LoginContainer = () => (
   <div className="container">
-    <Route exact path="/" render={() => <Redirect to="/Loginorm" />} />
+    <Route exact path="/" render={() => <Redirect to="/LoginForm" />} />
     <Route path="/LoginForm" component={LoginForm} />
   </div>
 )

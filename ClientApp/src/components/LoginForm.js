@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "./css/styles.css";
+import { setCookie } from './js/Cookies.js';
 
 export class LoginForm extends Component {
     static displayName = LoginForm.name;
@@ -11,16 +12,17 @@ export class LoginForm extends Component {
         //I don't know what this does stackoverflow suggested it
         this.userLogin = this.userLogin.bind(this);
     }
-    userLogin(userDetail)
+
+    async userLogin()
     {
         //console.log(userDetail) //  for testing - doesnt work
-        console.log(this.state) // for testing
-        console.log(this.state.userDetail) //  for testing
+        //console.log(this.state) // for testing
+        //console.log(this.state.userDetail) //  for testing
         //To get the the username and password on from the user login form
         var user = document.getElementById("username").value;
         var pass = document.getElementById("password").value;
         //The request to get the user account where the username and password matches the input
-        fetch('api/SampleData/getUserAccountDetailsForLogin?Username=' + user +'&Password='+pass) 
+        await fetch('api/SampleData/getUserAccountDetailsForLogin?Username=' + user + '&Password=' + pass)
             .then(response => response.json())
             .then(data => this.setState({ userDetail: data, loading: false }));
         //To check that the response has returned a valid user account detail
@@ -28,8 +30,20 @@ export class LoginForm extends Component {
         //    alert(entry);
         //});for testing - doesnt work
         //console.log(userDetail) //  for testing - doesnt work
-        console.log(this.state) // for testing
-        console.log(this.state.userDetail) //  for testing
+        //console.log(this.state) // for testing
+        //console.log(this.state.userDetail) //  for testing
+        //userLogin(this.state.userDetail.username, this.state.userDetail.userAccountID, remember);
+        
+        //window.location.pathname = "/DashboardMain";
+        this.finishLogin(this.state.userDetail.username, this.state.userDetail.userAccountID);
+    }
+
+    async finishLogin(user, id) {
+        var time = document.getElementById("rememberBox").checked ? 10 : 0;
+
+        await setCookie("username", user, time);
+        await setCookie("userid", String(id), time);
+        window.location.pathname = "/dashboardmain";
     }
 
     render() {
@@ -40,11 +54,11 @@ export class LoginForm extends Component {
                     <div>
                         <img src={require('./img/willingwebinverse.png')} alt="Willing Web" className='image' />
                     </div>
-                    <div class="container justify-content-center">
-                        <label for="username"><b>Username</b></label><br></br>
+                    <div className="container justify-content-center">
+                        <label htmlFor="username"><b>Username</b></label><br></br>
                         <input className="inputbox" type="text" placeholder="Enter Username" id="username" required></input>
                         <br></br>
-                        <label for="password"><b>Password</b></label><br></br>
+                        <label htmlFor="password"><b>Password</b></label><br></br>
                         <input className="inputbox" type="password" placeholder="Enter Password" id="password" required ></input>
                         <br></br>
                         <br></br>
@@ -54,8 +68,8 @@ export class LoginForm extends Component {
                         <div className="row justify-content-center">
                             <div className="col-md-6">
                                 <div className="justify-content-center">
-                                    <input type="checkbox" checked="checked" name="remember"></input>
-                                    <label for="remember" className="padLeft"><b>Remember Me?</b></label><br></br>
+                                    <input id="rememberBox" type="checkbox" defaultChecked="checked" name="remember"></input>
+                                    <label htmlFor="remember" className="padLeft"><b>Remember Me?</b></label><br></br>
                                 </div>
                             </div>
                             <div className="col-md-6">

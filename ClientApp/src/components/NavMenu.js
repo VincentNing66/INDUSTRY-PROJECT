@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
+import { logout } from './js/Cookies.js';
+import { loadavg } from 'os';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -40,7 +42,7 @@ export class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/EditUserAccount">Edit User Account</NavLink>
                 </NavItem> 
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/Loginform">Log Out</NavLink>
+                  <NavLink tag={Link} className="text-dark" onClick={logout} to="/Loginform">Log Out</NavLink>
                 </NavItem>               
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
