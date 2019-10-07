@@ -21,7 +21,6 @@ const DefaultContainer = () => (
         <Route path='/CreateUserAccount' component={CreateUserAccountForm}/>
         <Route path='/EditUserAccount' component={EditUserAccountForm} />
         <Route path='/ManageUserAccount' component={ManageUserAccount} />
-        <Route path='/CreateUserAccount' component={CreateUserAccountForm} />
         <Route path='/DashboardMain' component={DashboardMain} />
     </Layout>
   </div>
