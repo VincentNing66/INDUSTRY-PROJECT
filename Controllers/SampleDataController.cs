@@ -7,7 +7,6 @@ using INDUSTRY_PROJECT.Database;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
 
 namespace INDUSTRY_PROJECT.Controllers
 {
@@ -44,18 +43,6 @@ namespace INDUSTRY_PROJECT.Controllers
                 return userDetails;
             }
         }
-        [HttpGet("[action]")]
-        public string GetPermName(int permID)
-        {
-            //To retrieve a permission's name from the database
-            using (var db = new DbModel())
-            {
-                string permName = db.Permissions.Where(x => x.PermissionID == permID).Select(x => x.PermissionName).First();
-                return permName;
-            }
-        }
-
-
         [HttpPost("[action]")]
         public bool updateUserAccount()
         {
