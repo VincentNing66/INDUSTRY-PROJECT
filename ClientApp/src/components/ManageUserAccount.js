@@ -59,7 +59,7 @@ export class ManageUserAccount extends Component {
                       <button className="dashButton ol-lg-5 btn btn-primary">Update User Permission</button>
                       <button className="dashButton ol-lg-5 btn btn-primary">Unlock User Account</button>
                       <button className="dashButton ol-lg-5 btn btn-primary">Delete User Account</button>
-                      <button className="dashButton ol-lg-5 btn btn-primary">Create New User Account</button>
+                      <button className="dashButton ol-lg-5 btn btn-primary" onClick={goToCreate}>Create New User Account</button>
                     </div>
                   </div>
                 </div>
@@ -79,4 +79,7 @@ export class ManageUserAccount extends Component {
           </select>
           </div>)
       }
+
+      
 }
+function goToCreate(){window.location.pathname = "/createUserAccount"}
