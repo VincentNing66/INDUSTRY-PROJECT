@@ -14,10 +14,6 @@ export class CreateUserAccountForm extends Component {
             .then(data => this.setState({ perms: data, loading: false }))
 
     }
-    //This method is triggered on page load to get all permissions from the database and populate a dropdownbox for the user to select permission.
-    //componentDidMount() {
-        
-    //}
 
     sendUser() {
         var uname = document.getElementById("username").value;
@@ -63,10 +59,10 @@ export class CreateUserAccountForm extends Component {
             : CreateUserAccountForm.renderForm(this.state.perms);
 
         return (
-            <div className="col-lg-8">
-                <h1>Create User Account</h1>
+            <div className="container col-lg-12 justify-content-center">
+                <h1 className="container col-lg-6 justify-content-center">Create User Account</h1>
                 <hr></hr>
-                <form action="action_page.php" method="post">
+                <form  className="container col-lg-8">
                     <label htmlFor="username"><b>Username:</b></label>
                     <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" required ></input>
                     <br></br>
@@ -85,7 +81,7 @@ export class CreateUserAccountForm extends Component {
                     <label htmlFor="permission"><b>Select Permission:</b></label><br></br>
                     {contents}
                     <hr></hr>
-                    <button type="button" name="generatePassword" id="generatePassword" className="btn btn-primary">Generate Temporary Password</button>
+                    <button type="button" name="generatePassword" id="generatePassword" className="btn btn-primary justify-content-center">Generate Temporary Password</button>
                     <br></br><br></br>
                     <label htmlFor="updatePassword"><b>Password:</b></label><br></br>
                     <input className="form-control" type="password" placeholder="Update Password" name="permission" id="updatePassword" required ></input>
@@ -105,4 +101,21 @@ export class CreateUserAccountForm extends Component {
                 </form>
             </div>);
     }
+
+    //To populate the permission drop down box with a list of permissions from the database
+    static renderForm(perms) 
+    {
+        return (
+            <div className="form-group">
+            <select id="permission" name="permission" className="form-control" required>
+            {
+                perms.map(permission =>
+                    <option required>
+                    <value>{permission.permissionID}</value>
+                    <label>{permission.permissionName}</label>
+                    </option>
+                )}
+            </select>
+            </div>)
+        }
 }
