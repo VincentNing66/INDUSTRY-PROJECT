@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
+import ReactDOM from "react-dom";
 import './css/style.css';
 
 export class EditUserAccountForm extends Component {
     static displayName = EditUserAccountForm.name;
     constructor(props) {
         super(props);
+        this.btnTapped = this.updateUser.bind(this);
         this.state = {
-            userDetail: [], permName: "No Permission", loading: true, loading2: true
+            userDetail: [], loading: true
         };
         //To get all the user's details from the database on load of this component
         fetch('/api/SampleData/getUserAccountDetails?userID=1')
             .then(response => response.json())
-            .then(data => this.setState({ userDetail: data, loading2: false }))
-        fetch('/api/SampleData/GetPermName?permID=' + this.state.userDetail.permissionID)
-            .then(response => response.text())
-            .then(data => this.setState({ permName: data, loading: false }))
+            .then(data => this.setState({ userDetail: data, loading: false }))
     }
     //This method is triggered when the "save" button is clicked. It sends data from the form to the database.
     updateUser() {
@@ -38,14 +37,13 @@ export class EditUserAccountForm extends Component {
             alert("Password is empty. Enter a password");
             return;
         }
-        else if (confirm_pword == null) {
+        else if(confirm_pword==null) {
             alert("Confirm Password is empty. Enter the password twice");
             return;
         }
         //If the password and confirm password fields are the same
         if (pword === confirm_pword) {
             var JsonString = `{
-              "userAccountID": 1,
               "Username": "`+ uname + `",
               "FirstName": "`+ fname + `",
               "LastName": "`+ lname + `",
@@ -82,14 +80,49 @@ export class EditUserAccountForm extends Component {
     }
 
     render() {
-        let contents = (this.state.loading && this.state.loading2)
+        let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : EditUserAccountForm.renderForm(this.state.userDetail, this.state.permName);
+            : EditUserAccountForm.renderForm(this.state.userDetail);
 
         return (
             <div>
-                <form >
-                    {contents}
+                {contents}
+            </div>
+        );
+    }
+  static renderForm(userDetail) {
+    return (
+        <div className="container col-lg-12 justify-content-center">
+            <div className="container col-lg-8">
+                <h1 className="center-text">Edit User Account</h1>
+                <hr></hr>
+                <form action="action_page.php" method="post">
+                    <label htmlFor="username"><b>Username:</b></label>
+                        <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" required ></input>
+                        <br></br>
+                        <label htmlFor="firstname"><b>First Name:</b></label> <br></br>
+                        <input className="form-control" type="text" placeholder="Enter First Name" name="firstname" id="firstname" >{userDetail.FirstName}</input>
+                        <br></br>
+                        <label htmlFor="lastname"><b>Last Name:</b></label> <br></br>
+                        <input className="form-control" type="text" placeholder="Enter Last Name" name="lastname" id="lastname" ></input>
+                        <br></br>
+                        <label htmlFor="address"><b>Address:</b></label> <br></br>
+                        <input className="form-control" type="text" placeholder="Enter Address" name="address" id="address" ></input>
+                        <br></br>
+                        <label htmlFor="emailAddress"><b>Email Address:</b></label> <br></br>
+                        <input className="form-control" type="text" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" required ></input>
+                        <br></br>
+                    <label htmlFor="permission"><b>Current Permission:</b></label> <br></br>
+                    <select name="permissions" id="permissions" placeholder="Permission" className="form-control" required option={userDetail.permissionsID} disabled></select>
+                    <br></br>
+                    <hr></hr>
+                    <br></br>
+                    <label htmlFor="updatePassword"><b>Password:</b></label><br></br>
+                    <input className="form-control" type="password" placeholder="Update Password" name="permission" id="updatePassword" required ></input>
+                    <br></br>
+                    <label htmlFor="confirmPassword"><b>Confirm Password:</b></label><br></br>
+                    <input className="form-control" type="password" placeholder="Confirm New Password" name="confirmPassword" id="confirmPassword" required ></input>
+                    <br></br>
                     <div className="justify-content-center row">
                         <div className="col-lg-6 col-sm-12 text-center">
                             <button type="button" name="save" id="save" onClick={this.updateUser} className="btn btn-primary">Update</button>
@@ -98,44 +131,7 @@ export class EditUserAccountForm extends Component {
                             <button type="button" name="cancel" id="cancel" className="btn btn-primary">Cancel</button>
                         </div>
                     </div>
-                </form>
-            </div>
-        );
-    }
-    static renderForm(userDetail, permName) {
-    return (
-        <div className="container col-lg-12 justify-content-center">
-            <div className="container col-lg-8">
-                <h1 className="center-text">Edit User Account</h1>
-                <hr></hr>
-                <label htmlFor="username"><b>Username:</b></label>
-                <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" defaultValue={userDetail.username} required ></input>
-                <br></br>
-                <label htmlFor="firstname"><b>First Name:</b></label> <br></br>
-                <input className="form-control" type="text" placeholder="Enter First Name" name="firstname" id="firstname" defaultValue={userDetail.firstName}></input>
-                <br></br>
-                <label htmlFor="lastname"><b>Last Name:</b></label> <br></br>
-                <input className="form-control" type="text" placeholder="Enter Last Name" name="lastname" id="lastname" defaultValue={userDetail.lastName}></input>
-                <br></br>
-                <label htmlFor="address"><b>Address:</b></label> <br></br>
-                <input className="form-control" type="text" placeholder="Enter Address" name="address" id="address" defaultValue={userDetail.address} ></input>
-                <br></br>
-                <label htmlFor="emailAddress"><b>Email Address:</b></label> <br></br>
-                <input className="form-control" type="text" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" defaultValue={userDetail.emailAddress} required ></input>
-                <br></br>
-                <label htmlFor="permission"><b>Current Permission:</b></label> <br></br>
-                <select name="permissions" id="permissions" placeholder="Permission" className="form-control" disabled required option={userDetail.permissionsID}>
-                    <option selected value={permName}>{permName}</option>
-                </select>
-                <br></br>
-                <hr></hr>
-                <br></br>
-                <label htmlFor="updatePassword"><b>Password:</b></label><br></br>
-                <input className="form-control" type="password" placeholder="Update Password" name="permission" id="updatePassword" required ></input>
-                <br></br>
-                <label htmlFor="confirmPassword"><b>Confirm Password:</b></label><br></br>
-                <input className="form-control" type="password" placeholder="Confirm New Password" name="confirmPassword" id="confirmPassword" required ></input>
-                <br></br>
+                    </form>
             </div>
       </div>
     );
