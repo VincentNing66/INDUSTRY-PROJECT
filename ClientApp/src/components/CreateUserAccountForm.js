@@ -56,7 +56,6 @@ export class CreateUserAccountForm extends Component {
             window.alert("Unable to create new user. The entered password and confirm password does not match. Try again.");
         }
     }
-
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>

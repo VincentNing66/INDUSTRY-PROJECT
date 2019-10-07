@@ -42,8 +42,8 @@ export class DashboardMain extends Component {
                                 <input/>
                             </div>
                             <div className="buts">
-                                <button className="dashButton"> Refresh Data </button>
-                                <button className="dashButton"> Generate Report </button>
+                                <button className="dashButton btn btn-primary"> Refresh Data </button>
+                                <button className="dashButton btn btn-primary"> Generate Report </button>
                             </div>
                         </div>
                     </div>
