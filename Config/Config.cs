@@ -9,7 +9,11 @@ namespace INDUSTRY_PROJECT.Config
 {
     public class ConfigModel
     {
-        public string ConnectionString { get; set; } 
+        public string ConnectionString { get; set; }
+        public string CFKey { get; set; }
+        public string SAS_Secret { get; set; }
+        public string SAS_Token { get; set; }
+        public string SAS_AffiliateID { get; set; }
     }
     public class Configuration
     {
