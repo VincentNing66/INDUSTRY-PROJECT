@@ -24,26 +24,26 @@ export class NavMenu extends Component {
   render () {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+        <Navbar className="navbar-expand-lg navbar-dark bg-dark border-bottom box-shadow mb-3" bg="dark" variant="dark">
           <Container>
-            <NavbarBrand tag={Link} to="/">INDUSTRY_PROJECT</NavbarBrand>
+            <NavbarBrand tag={Link} to="/"><img src={require('./img/transparent.png')} /></NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/ManageUserAccount">Manage User Account</NavLink>
+                  <NavLink tag={Link} className="text-light" to="/ManageUserAccount">Manage User Account</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/DashboardMain">Dashboard</NavLink>
+                  <NavLink tag={Link} className="text-light" to="/DashboardMain">Dashboard</NavLink>
                 </NavItem> 
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/EditUserAccount">Edit User Account</NavLink>
+                  <NavLink tag={Link} className="text-light" to="/EditUserAccount">Edit User Account</NavLink>
                 </NavItem> 
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/Loginform">Log Out</NavLink>
+                  <NavLink tag={Link} className="text-light" to="/Loginform">Log Out</NavLink>
                 </NavItem>               
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
+                  <NavLink tag={Link} className="text-light" to="/fetch-data">Fetch data</NavLink>
                 </NavItem>
               </ul>
             </Collapse>

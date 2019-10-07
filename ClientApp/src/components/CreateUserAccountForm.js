@@ -79,7 +79,6 @@ export class CreateUserAccountForm extends Component {
                   <input className="form-control" type="text" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" required ></input>
                   <br></br>
                   <label htmlFor="permission"><b>Select Permission:</b></label><br></br>
-                  {contents}
                   <hr></hr>
                   <button type="button" name="generatePassword" id="generatePassword" className="btn btn-primary">Generate Temporary Password</button>
                   <br></br><br></br>
