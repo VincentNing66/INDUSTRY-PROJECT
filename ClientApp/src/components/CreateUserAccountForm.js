@@ -28,7 +28,7 @@ export class CreateUserAccountForm extends Component {
         <div className="col-lg-8">
             <h1>Create User Account</h1>
             <hr></hr>
-            <form action="action_page.php" method="post">
+            <form>
                 <label htmlFor="username"><b>Username:</b></label>
                 <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" required ></input>
                 <br></br>
