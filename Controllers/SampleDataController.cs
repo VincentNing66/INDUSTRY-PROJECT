@@ -7,6 +7,7 @@ using INDUSTRY_PROJECT.Database;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace INDUSTRY_PROJECT.Controllers
 {
@@ -43,6 +44,28 @@ namespace INDUSTRY_PROJECT.Controllers
                 return userDetails;
             }
         }
+        [HttpGet("[action]")]
+        public bool CheckUserAccountEmailDoesNotExist(string email)
+        {
+            try
+            {
+                //To check if there is a user account using a specific email already exists in the database
+                using (var db = new DbModel())
+                {
+                    UserAccount userDetails = db.UserAccount.Where(x=>x.EmailAddress== email).ToList().First();
+                    if(userDetails.EmailAddress==null)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch(Exception)
+            {
+                //testing - assuming if it doesnt find anything that's good
+                return true;
+            }
+        }
         [HttpPost("[action]")]
         public bool updateUserAccount()
         {
@@ -58,6 +81,16 @@ namespace INDUSTRY_PROJECT.Controllers
                 db.SaveChanges();
             }
             return true;
+        }
+        [HttpGet("[action]")]
+        public string GetPermName(int permID)
+        {
+            //To retrieve a permission's name from the database
+            using (var db = new DbModel())
+            {
+                string permName = db.Permissions.Where(x => x.PermissionID == permID).Select(x => x.PermissionName).First();
+                return permName;
+            }
         }
         #endregion
 
