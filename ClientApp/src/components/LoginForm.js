@@ -35,7 +35,12 @@ export class LoginForm extends Component {
         //userLogin(this.state.userDetail.username, this.state.userDetail.userAccountID, remember);
         
         //window.location.pathname = "/DashboardMain";
-        this.finishLogin(this.state.userDetail.username, this.state.userDetail.userAccountID);
+        if (this.state.userDetail.username !== "undefined" && this.state.userDetail.userAccountID !== 0) {
+            this.finishLogin(this.state.userDetail.username, this.state.userDetail.userAccountID);
+        }
+        else {
+            alert("invalid username and password.")
+        }
     }
 
     async finishLogin(user, id) {
