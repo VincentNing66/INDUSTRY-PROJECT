@@ -105,14 +105,4 @@ export class CreateUserAccountForm extends Component {
                 </form>
             </div>);
     }
-
-  static renderForm(permissions) {
-    return (
-        {
-            permissions.map(permission =>
-            <tr key={permission.PermissionID}>
-                <td>{permission.PermissionID}</td>
-                <td>{permission.PermissionName}</td>
-            </tr>)
-        };
-  }
+}
