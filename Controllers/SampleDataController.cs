@@ -31,6 +31,50 @@ namespace INDUSTRY_PROJECT.Controllers
             }
             return true;
         }
+        [HttpGet("[action]")]
+        public bool CheckUserAccountUsernameDoesNotExist(string username)
+        {
+            try
+            {
+                //To check if there is a user account using a specific username already exists in the database
+                using (var db = new DbModel())
+                {
+                    UserAccount userDetails = db.UserAccount.Where(x=>x.Username== username).ToList().First();
+                    if(userDetails.Username==null)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch(Exception)
+            {
+                //testing - assuming if it doesnt find anything that's good
+                return true;
+            }
+        }
+        [HttpGet("[action]")]
+        public bool CheckUserAccountEmailDoesNotExist(string email)
+        {
+            try
+            {
+                //To check if there is a user account using a specific email already exists in the database
+                using (var db = new DbModel())
+                {
+                    UserAccount userDetails = db.UserAccount.Where(x=>x.EmailAddress== email).ToList().First();
+                    if(userDetails.EmailAddress==null)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch(Exception)
+            {
+                //testing - assuming if it doesnt find anything that's good
+                return true;
+            }
+        }
         #endregion
 
         #region EditUserAccount GET & POST Methods
