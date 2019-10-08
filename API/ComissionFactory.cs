@@ -15,7 +15,7 @@ namespace INDUSTRY_PROJECT.API
     {
         public const string CFURL = "https://api.commissionfactory.com/V1/Affiliate/Reports/Merchant";
 
-        public static void CallComissionFactory()
+        public static void CallComissionFactory(int id)
         {
             DateTime today = DateTime.Today;
             DateTime yesterday = today.AddDays(-1);
@@ -58,7 +58,7 @@ namespace INDUSTRY_PROJECT.API
                         ComissionPending = item.CommissionPending,
                         ComissionAprroved = item.CommissionApproved,
                         ComissionVoid = item.CommissionVoid,
-                        TimeStampID = 1
+                        TimeStampID = id
                     };
                     db.ComissionFactory.Add(input);
                 }

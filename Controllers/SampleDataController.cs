@@ -188,5 +188,63 @@ namespace INDUSTRY_PROJECT.Controllers
             }
         }
         #endregion
+
+        #region dashboard
+
+        public class apiInfo
+        {
+            public int clicks { get; set; }
+            public float comissionTotal { get; set; }
+            public float earnPerClick { get; set; }
+            public float earnPerUser { get; set; }
+        }
+
+        [HttpGet("Action")]
+        public apiInfo getApiInfo(int test)
+        {
+            using (var db = new DbModel())
+            {
+                apiInfo response = new apiInfo();
+                var timestampID = db.TimeStamps.Last().TimeStampID;
+
+                var responseList = db.ComissionFactory.Where(x => x.TimeStampID == timestampID).ToList();
+
+                response.clicks = responseList.Sum(x => x.ClicksTotal);
+                response.comissionTotal = responseList.Sum(x => x.ComissionAprroved + x.ComissionPending + x.ComissionVoid);
+                response.earnPerUser = (responseList.Sum(x => x.ComissionAprroved + x.ComissionPending + x.ComissionVoid) / responseList.Count);
+                response.earnPerClick = (responseList.Sum(x => x.ComissionAprroved + x.ComissionPending + x.ComissionVoid) / responseList.Sum(x => x.ClicksTotal));
+
+                return response;
+            }
+        }
+
+        [HttpGet("Action")]
+        public apiInfo RefreshAPI(int test)
+        {
+            using (var db = new DbModel())
+            {
+                apiInfo response = new apiInfo();
+
+                db.TimeStamps.Add(new TimeStamp()
+                {
+                    TimeStampValue = DateTime.Now
+                });
+                db.SaveChanges();
+
+                var timestampID = db.TimeStamps.Last().TimeStampID;
+                API.ComissionFactory.CallComissionFactory(timestampID);
+
+                var responseList = db.ComissionFactory.Where(x => x.TimeStampID == timestampID).ToList();
+
+                response.clicks = responseList.Sum(x => x.ClicksTotal);
+                response.comissionTotal = responseList.Sum(x => x.ComissionAprroved + x.ComissionPending + x.ComissionVoid);
+                response.earnPerUser = (responseList.Sum(x => x.ComissionAprroved + x.ComissionPending + x.ComissionVoid) / responseList.Count);
+                response.earnPerClick = (responseList.Sum(x => x.ComissionAprroved + x.ComissionPending + x.ComissionVoid) / responseList.Sum(x => x.ClicksTotal));
+
+                return response;
+            }
+        }
+
+        #endregion
     }
 }

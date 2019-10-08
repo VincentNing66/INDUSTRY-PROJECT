@@ -67,64 +67,26 @@ export class CreateUserAccountForm extends Component {
               "Password": "`+ pword + `",
               "PermissionsId": "`+permiss +`"
             }`;
-            //To check if these details don't already exist in the database
-            try {
-                fetch('/api/SampleData/CheckUserAccountUsernameDoesNotExist?userName='+uname)
-                .then(response => response.json())
-                .then(data => this.setState({ usernameExists: data}))
-                //If we recieve a response as true, it means that an account with that usernane or email address already exists. 
-                //Cannot create the account and must change username or password to something else
-                if(this.state.usernameExists==true)
-                {
-                    alert("This username is associated to another user account.\n Enter a new username");
-                    //To reset the state 
-                    this.setState({usernameExists:false});
-                    return;
-                }
-            }
-            catch (Exception) {
-                alert("Unable to check if this user account already exists. Try again");
-            }
-            try {
-                fetch('/api/SampleData/CheckUserAccountEmailDoesNotExist?email='+email)
-                .then(response => response.json())
-                .then(data => this.setState({ emailExists: data}))
-                //If we recieve a response as true, it means that an account with that usernane or email address already exists. 
-                //Cannot create the account and must change username or password to something else
-                if(this.state.usernameExists==true)
-                {
-                    alert("This email address is associated to another user account.\n Enter a new email address");
-                    //To reset the state 
-                    this.setState({emailExists:false});
-                    return;
-                }
-            }
-            catch (Exception) {
-                alert("Unable to check if this user account already exists. Try again");
-            }
             //All form details have been passed validation. The following post request updates the database 
             try {
-                if(this.state.emailExists==false && this.state.usernameExists==false)
-                {
-                    fetch('api/SampleData/addUser', {
-                        method: 'POST',
-                        body: JsonString,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    //To display to the user that the account has been created successfully
-                    alert("User acccount successfully created");
-                    //To clear out the fields so a user can create another user account
-                    document.getElementById("username").value = '';
-                    document.getElementById("firstname").value='';
-                    document.getElementById("lastname").value='';
-                    document.getElementById("address").value='';
-                    document.getElementById("emailAddress").value='';
-                    document.getElementById("password").value='';
-                    document.getElementById("confirmPassword").value='';
-                    document.getElementById("permission").selectedIndex=0;
-                }
+                fetch('api/SampleData/addUser', {
+                    method: 'POST',
+                    body: JsonString,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                //To display to the user that the account has been created successfully
+                alert("User acccount successfully created");
+                //To clear out the fields so a user can create another user account
+                document.getElementById("username").value = '';
+                document.getElementById("firstname").value='';
+                document.getElementById("lastname").value='';
+                document.getElementById("address").value='';
+                document.getElementById("emailAddress").value='';
+                document.getElementById("password").value='';
+                document.getElementById("confirmPassword").value='';
+                document.getElementById("permission").selectedIndex=0;
             }
             catch (Exception) {
                 alert("Unable to create this user account. Try again");

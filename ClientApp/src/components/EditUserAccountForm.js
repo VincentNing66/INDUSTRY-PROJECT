@@ -66,7 +66,7 @@ export class EditUserAccountForm extends Component {
         //If the password and confirm password fields are the same
         if (pword === confirm_pword) {
             var JsonString = `{
-              "userAccountID": 1,
+              "userAccountID": `+getCookie("userid")+`,
               "Username": "`+ uname + `",
               "FirstName": "`+ fname + `",
               "LastName": "`+ lname + `",
@@ -111,12 +111,14 @@ export class EditUserAccountForm extends Component {
             <div>
                 <form >
                 {contents}
-                <div className="justify-content-center row">
-                    <div className="col-lg-4 col-sm-12 text-center">
+                    <div className="justify-content-center row ">
+                    <div className="col-lg-6 col-sm-12 text-center">
                         <button type="button" name="save" id="save" onClick={this.updateUser} className="btn btn-primary">Update</button>
+                    </div>
+                    <div className="col-lg-6 col-sm-12 text-center">
                         <button type="button" name="cancel" id="cancel" onClick={this.reloadPage} className="btn btn-primary">Cancel</button>
                     </div>
-                    </div>
+                  </div>
                 </form>
             </div>
         );
