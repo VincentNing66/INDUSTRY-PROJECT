@@ -30,34 +30,47 @@ export class CreateUserAccountForm extends Component {
         var warningList=[];
         if (uname === null || uname === "") {
             warningList.push("Username is empty");
+            document.getElementById("username").style.backgroundColor = "#c9c5c8";
         }
         if (email === null || email === "") {
             warningList.push("Email Address is empty");
+            document.getElementById("emailAddress").style.backgroundColor = "#c9c5c8";
         }
         //If email is not empty but contains no @ symbol
         else if (email.includes("@")==false) {
             warningList.push("Email Address is not valid");
+            document.getElementById("emailAddress").style.backgroundColor = "#c9c5c8";
         }
         if (pword === null || pword === "") {
             warningList.push("Password is empty");
+            document.getElementById("password").style.backgroundColor = "#c9c5c8";
         }
         if(confirm_pword===null || confirm_pword==="") {
             warningList.push("Confirm password is empty");
+            document.getElementById("confirmPassword").style.backgroundColor = "#c9c5c8";
         }
         //Validation, will check that that there are no warnings
-        if(warningList.count>0)
+        if(warningList.length>0)
         {
             //Will display a list of items that are empty
-            var warningMessage = "Please enter the following required fields marked in red:";
-            var generatedList;
+            var warningMessage = "Please enter the following required fields marked in red: \n";
             warningList.forEach(function(item) {
-                generatedList += "\n" + item ;
-              });
-            alert(warningMessage + generatedList);
+                warningMessage += item + "\n" ;
+            });
+            alert(warningMessage);
+
             return;
         }
         //Validation - Check that the password and confirm password fields are the same
         if (pword === confirm_pword) {
+            document.getElementById("username_label").style.className ="text-success";
+            document.getElementById("firstname").style.className = "text-success";
+            document.getElementById("lastname").style.className = "text-success";
+            document.getElementById("address").style.className = "text-success";
+            document.getElementById("emailAddress").style.className = "text-success";
+            document.getElementById("password").style.className = "text-success";
+            document.getElementById("confirmPassword").style.className = "text-success";
+            document.getElementById("permission").style.className = "text-success";
             var JsonString = `{
               "Username": "`+ uname + `",
               "FirstName": "`+ fname + `",
@@ -86,7 +99,7 @@ export class CreateUserAccountForm extends Component {
                 document.getElementById("emailAddress").value='';
                 document.getElementById("password").value='';
                 document.getElementById("confirmPassword").value='';
-                document.getElementById("permission").selectedIndex=0;
+                document.getElementById("permission").selectedIndex = 0;
             }
             catch (Exception) {
                 alert("Unable to create this user account. Try again");
@@ -106,30 +119,30 @@ export class CreateUserAccountForm extends Component {
                 <h1 className="container col-lg-6 justify-content-center">Create User Account</h1>
                 <hr></hr>
                 <form  className="container col-lg-8">
-                    <label htmlFor="username"><b>Username:</b></label>
+                    <label className="text-primary" htmlFor="username" id="username_label"><b>Username:</b></label>
                     <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" required ></input>
                     <br></br>
-                    <label htmlFor="firstname"><b>First Name:</b></label><br></br>
+                    <label className="text-primary" htmlFor="firstname" id="firstname_label"><b>First Name:</b></label><br></br>
                     <input className="form-control" type="text" placeholder="Enter First Name" name="firstname" id="firstname" ></input>
                     <br></br>
-                    <label htmlFor="lastname"><b>Last Name:</b></label><br></br>
+                    <label className="text-primary" htmlFor="lastname" id="lastname_label"><b>Last Name:</b></label><br></br>
                     <input className="form-control" type="text" placeholder="Enter Last Name" name="lastname" id="lastname" ></input>
                     <br></br>
-                    <label htmlFor="address"><b>Address:</b></label><br></br>
+                    <label className="text-primary" htmlFor="address" id="address_label"><b>Address:</b></label><br></br>
                     <input className="form-control" type="text" placeholder="Enter Address" name="address" id="address" ></input>
                     <br></br>
-                    <label htmlFor="emailAddress"><b>Email Address:</b></label><br></br>
+                    <label className="text-primary" htmlFor="emailAddress" id="emailAddress_label"><b>Email Address:</b></label><br></br>
                     <input className="form-control" type="text" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" required ></input>
                     <br></br>
-                    <label htmlFor="permission"><b>Select Permission:</b></label><br></br>
+                    <label className="text-primary" htmlFor="permission" id="permission_label"><b>Select Permission:</b></label><br></br>
                     {contents}
                     <hr></hr>
                     <button type="button" name="generatePassword" id="generatePassword" className="btn btn-primary justify-content-center">Generate Temporary Password</button>
                     <br></br><br></br>
-                    <label htmlFor="updatePassword"><b>Password:</b></label><br></br>
-                    <input className="form-control" type="password" placeholder="Enter Password" name="permission" id="password" required ></input>
+                    <label className="text-primary" htmlFor="password" id="password_label"><b>Password:</b></label><br></br>
+                    <input className="form-control" type="password" placeholder="Enter Password" name="password" id="password" required ></input>
                     <br></br>
-                    <label htmlFor="confirmPassword"><b>Confirm Password:</b></label><br></br>
+                    <label className="text-primary" htmlFor="confirmPassword" id="confirmPassword_label"><b>Confirm Password:</b></label><br></br>
                     <input className="form-control" type="password" placeholder="Confirm New Password" name="confirmPassword" id="confirmPassword" required ></input>
                     <br></br>
                     <div className="justify-content-center row">
