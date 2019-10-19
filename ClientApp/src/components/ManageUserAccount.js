@@ -103,7 +103,7 @@ export class ManageUserAccount extends Component {
 
       
 }
-function goToCreate(){window.location.pathname = "/creatUserAccount"}
+function goToCreate(){window.location.pathname = "/createUserAccount"}
 
 
 

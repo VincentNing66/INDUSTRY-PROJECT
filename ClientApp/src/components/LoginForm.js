@@ -15,31 +15,38 @@ export class LoginForm extends Component {
 
     async userLogin()
     {
-        //console.log(userDetail) //  for testing - doesnt work
-        //console.log(this.state) // for testing
-        //console.log(this.state.userDetail) //  for testing
         //To get the the username and password on from the user login form
         var user = document.getElementById("username").value;
         var pass = document.getElementById("password").value;
+        //Validation to check that the username&password are not empty
+        var warningList = [];
+        if (user === "") {
+            warningList.push("No username submitted");
+        }
+        if (pass === "") {
+            warningList.push("No password submitted");
+        }
+        //Validation, will check that that there are no warnings
+        if (warningList.length > 0) {
+            //Will display a list of items that are empty
+            var warningMessage = "Invalid login attempt. Please re-enter a valid username and password: \n";
+            warningList.forEach(function (item) {
+                warningMessage += item + "\n";
+            });
+            alert(warningMessage);
+            return;
+        }
         //The request to get the user account where the username and password matches the input
         await fetch('api/SampleData/getUserAccountDetailsForLogin?Username=' + user + '&Password=' + pass)
             .then(response => response.json())
             .then(data => this.setState({ userDetail: data, loading: false }));
         //To check that the response has returned a valid user account detail
-        //userDetail.forEach(function (entry) {
-        //    alert(entry);
-        //});for testing - doesnt work
-        //console.log(userDetail) //  for testing - doesnt work
-        //console.log(this.state) // for testing
-        //console.log(this.state.userDetail) //  for testing
-        //userLogin(this.state.userDetail.username, this.state.userDetail.userAccountID, remember);
-        
-        //window.location.pathname = "/DashboardMain";
         if (this.state.userDetail.username !== "undefined" && this.state.userDetail.userAccountID !== 0) {
+            alert("Successful Login. Welcome back " + this.state.userDetail.username);
             this.finishLogin(this.state.userDetail.username, this.state.userDetail.userAccountID);
         }
         else {
-            alert("invalid username and password.")
+            alert("Invalid login attempt. User account does not exist\nPlease re-enter a valid username and password")
         }
     }
 
@@ -53,7 +60,7 @@ export class LoginForm extends Component {
 
     render() {
         return (
-            <div className="container justify-content-center col-md-12 center loginform">
+            <div className="container justify-content-center col-md-8 center loginform">
                 <h1>Log Into Dashboard</h1>
                 <form action="action_page.php" method="post">
                     <div>
@@ -71,7 +78,7 @@ export class LoginForm extends Component {
                         <br></br>
                         <br></br>
                         <div className="row justify-content-center">
-                            <div className="col-md-6">
+                            <div className="col-md-8">
                                 <div className="justify-content-center">
                                     <input id="rememberBox" type="checkbox" defaultChecked="checked" name="remember"></input>
                                     <label htmlFor="remember" className="padLeft"><b>Remember Me?</b></label><br></br>
