@@ -17,7 +17,6 @@ const DefaultContainer = () => (
   <div className="container">
     <Layout>
         <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
         <Route path='/CreateUserAccount' component={CreateUserAccountForm}/>
         <Route path='/EditUserAccount' component={EditUserAccountForm} />
         <Route path='/ManageUserAccount' component={ManageUserAccount} />

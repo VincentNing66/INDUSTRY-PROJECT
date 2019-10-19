@@ -58,7 +58,6 @@ export class CreateUserAccountForm extends Component {
                 warningMessage += item + "\n" ;
             });
             alert(warningMessage);
-
             return;
         }
         //Validation - Check that the password and confirm password fields are the same

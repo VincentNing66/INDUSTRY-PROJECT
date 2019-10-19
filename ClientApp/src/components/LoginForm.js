@@ -46,7 +46,8 @@ export class LoginForm extends Component {
             this.finishLogin(this.state.userDetail.username, this.state.userDetail.userAccountID);
         }
         else {
-            alert("Invalid login attempt. User account does not exist\nPlease re-enter a valid username and password")
+            alert("Invalid login attempt. User account does not exist\nPlease re-enter a valid username and password");
+            document.getElementById("forgottenPassword").innerText = "Forgot Password? Click here";
         }
     }
 
@@ -85,7 +86,7 @@ export class LoginForm extends Component {
                                 </div>
                             </div>
                             <div className="col-md-6">
-                                <label><a href="#"><b>Forgot Password?</b></a></label><br></br>
+                                <label id="forgottenPassword"><a href="#"><b>Forgot Password?</b></a></label><br></br>
                             </div>
                         </div>
                     </div>

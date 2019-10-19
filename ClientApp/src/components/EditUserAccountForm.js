@@ -35,32 +35,35 @@ export class EditUserAccountForm extends Component {
         var confirm_pword = document.getElementById("confirmPassword").value;
         //Validation - Check that the required fields are not null and are valid
         var warningList=[];
-        if (uname === null || uname === "") {
+        if (uname === "") {
             warningList.push("Username is empty");
         }
-        if (email === null || email === "") {
+        if (email === "") {
             warningList.push("Email Address is empty");
         }
         //If email is not empty but contains no @ symbol
         else if (email.includes("@")==false) {
             warningList.push("Email Address is not valid");
         }
-        if (pword === null || pword === "") {
+        if (pword === "") {
             warningList.push("Password is empty");
         }
-        if(confirm_pword===null || confirm_pword==="") {
+        if(confirm_pword==="") {
             warningList.push("Confirm password is empty");
         }
         //Validation, will check that that there are no warnings
-        if(warningList.count>0)
+        if(warningList.length>0)
         {
             //Will display a list of items that are empty
-            var warningMessage = "Please enter the following required fields marked in red:";
-            var generatedList;
-            warningList.forEach(function(item) {
-                generatedList += "\n" + item ;
-              });
-            alert(warningMessage + generatedList);
+            var warningMessage = "Please enter the following required fields marked in red: \n";
+            warningList.forEach(function (item) {
+                warningMessage += item + "\n";
+            });
+            alert(warningMessage);
+            document.getElementById("label_username").style.color = "red";
+            document.getElementById("label_confirmPassword").style.color = "red";
+            document.getElementById("label_updatePassword").style.color = "red";
+            document.getElementById("label_emailAddress").style.color = "red";
             return;
         }
         //If the password and confirm password fields are the same
@@ -83,7 +86,15 @@ export class EditUserAccountForm extends Component {
                         'Content-Type': 'application/json'
                     }
                 });
-                alert("User account successfully updated");
+                alert("User account details sucessfully updated");
+                document.getElementById("label_username").style.color = "green";
+                document.getElementById("label_confirmPassword").style.color = "green";
+                document.getElementById("label_updatePassword").style.color = "green";
+                document.getElementById("label_emailAddress").style.color = "green";
+                document.getElementById("label_firstname").style.color = "green";
+                document.getElementById("label_lastname").style.color = "green";
+                document.getElementById("label_address").style.color = "green";
+                document.getElementById("label_permission").style.color = "green";
             }
             catch (Exception) {
                 //Something went wrong with the API request
@@ -129,22 +140,22 @@ export class EditUserAccountForm extends Component {
                 <div className="container col-lg-8">
                     <h1 className="center-text">Edit User Account</h1>
                     <hr></hr>
-                    <label htmlFor="username"><b>Username:</b></label>
+                    <label id="label_username" htmlFor="username"><b>Username:</b></label>
                     <input className="form-control" type="text" placeholder="Enter Username" name="username" id="username" defaultValue={userDetail.username} required ></input>
                     <br></br>
-                    <label htmlFor="firstname"><b>First Name:</b></label> <br></br>
+                    <label id="label_firstname" htmlFor="firstname"><b>First Name:</b></label> <br></br>
                     <input className="form-control" type="text" placeholder="Enter First Name" name="firstname" id="firstname" defaultValue={userDetail.firstName}></input>
                     <br></br>
-                    <label htmlFor="lastname"><b>Last Name:</b></label> <br></br>
+                    <label id="label_lastname" htmlFor="lastname"><b>Last Name:</b></label> <br></br>
                     <input className="form-control" type="text" placeholder="Enter Last Name" name="lastname" id="lastname" defaultValue={userDetail.lastName}></input>
                     <br></br>
-                    <label htmlFor="address"><b>Address:</b></label> <br></br>
+                    <label id="label_address" htmlFor="address"><b>Address:</b></label> <br></br>
                     <input className="form-control" type="text" placeholder="Enter Address" name="address" id="address" defaultValue={userDetail.address} ></input>
                     <br></br>
-                    <label htmlFor="emailAddress"><b>Email Address:</b></label> <br></br>
+                    <label id="label_emailAddress" htmlFor="emailAddress"><b>Email Address:</b></label> <br></br>
                     <input className="form-control" type="text" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" defaultValue={userDetail.emailAddress} required ></input>
                     <br></br>
-                    <label htmlFor="permission"><b>Current Permission:</b></label>
+                    <label id="label_permission" htmlFor="permission"><b>Current Permission:</b></label>
                     <br></br>
                     <select name="permissions" id="permissions" placeholder="Permission" className="form-control" disabled required>
                         <option>{permName}</option>
@@ -152,10 +163,10 @@ export class EditUserAccountForm extends Component {
                     <br></br>
                     <hr></hr>
                     <br></br>
-                    <label htmlFor="updatePassword"><b>Password:</b></label><br></br>
+                    <label id="label_updatePassword" htmlFor="updatePassword"><b>Password:</b></label><br></br>
                     <input className="form-control" type="password" placeholder="Update Password" name="permission" id="updatePassword" required ></input>
                     <br></br>
-                    <label htmlFor="confirmPassword"><b>Confirm Password:</b></label><br></br>
+                    <label id="label_confirmPassword" htmlFor="confirmPassword"><b>Confirm Password:</b></label><br></br>
                     <input className="form-control" type="password" placeholder="Confirm New Password" name="confirmPassword" id="confirmPassword" required ></input>
                     <br></br>
             </div>
