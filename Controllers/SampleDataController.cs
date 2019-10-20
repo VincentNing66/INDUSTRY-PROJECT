@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace INDUSTRY_PROJECT.Controllers
 {
@@ -16,8 +17,10 @@ namespace INDUSTRY_PROJECT.Controllers
     {
         #region CreateUserAccount GET & POST Methods
         [HttpPost("[action]")]
-        public bool AddUser()
+        public string AddUser(int currentUserID)
         {
+            bool userEmailStatus;
+            bool userUserNameStatus;
             string UserJson = null;
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
@@ -26,55 +29,59 @@ namespace INDUSTRY_PROJECT.Controllers
             UserAccount user = JsonConvert.DeserializeObject<UserAccount>(UserJson);
             using (var db = new DbModel())
             {
-                db.UserAccount.Add(user);
-                db.SaveChanges();
-            }
-            return true;
-        }
-        [HttpGet("[action]")]
-        public bool CheckUserAccountUsernameDoesNotExist(string username)
-        {
-            try
-            {
-                //To check if there is a user account using a specific username already exists in the database
-                using (var db = new DbModel())
+
+                //To check if the email address has already been used in the database (will try to grab the first instance)
+                List<UserAccount> userResultList = db.UserAccount.Where(x => x.EmailAddress == user.EmailAddress && x.UserAccountID != currentUserID).ToList();
+                userEmailStatus = userResultList.Count.Equals(0) ? false : true;
+                //To check if the username has already been used in the database (will try to grab the first instance)
+                List<UserAccount> userResultList2 = db.UserAccount.Where(x => x.Username == user.Username && x.UserAccountID != currentUserID).ToList();
+                userUserNameStatus = userResultList2.Count.Equals(0) ? false : true;
+                //If it fails to find the same username or email, it means that it's okay to insert into the database
+                if (new[] { userUserNameStatus, userEmailStatus }.All(x => x == false))
                 {
-                    UserAccount userDetails = db.UserAccount.Where(x=>x.Username== username).ToList().First();
-                    if(userDetails.Username==null)
-                    {
-                        return true;
-                    }
-                    return false;
+                    //Will insert a new user into the database
+                    db.UserAccount.Add(user);
+                    db.SaveChanges();
+                    ResponseStatus result = new ResponseStatus();
+                    result.StatusCode = 200;
+                    string output = JsonConvert.SerializeObject(result);
+                    return output;
+                }
+                else if (userUserNameStatus.Equals(true) && userEmailStatus.Equals(false))
+                {
+                    //Code 99 = The username exists but the email doesn't exist
+                    ResponseStatus result = new ResponseStatus();
+                    result.StatusCode = 99;
+                    string output = JsonConvert.SerializeObject(result);
+                    return output;
+                }
+                else if (userUserNameStatus.Equals(false) && userEmailStatus.Equals(true))
+                {
+                    //Code 98 = The username doesn't exists but the email does exist
+                    ResponseStatus result = new ResponseStatus();
+                    result.StatusCode = 98;
+                    string output = JsonConvert.SerializeObject(result);
+                    return output;
+                }
+                else if (userUserNameStatus.Equals(true) && userEmailStatus.Equals(true))
+                {
+                    //Code 97 = The username exists and the email exists
+                    ResponseStatus result = new ResponseStatus();
+                    result.StatusCode = 97;
+                    string output = JsonConvert.SerializeObject(result);
+                    return output;
+                }
+                else
+                {
+                    //Code 96 = Unknown
+                    ResponseStatus result = new ResponseStatus();
+                    result.StatusCode = 96;
+                    string output = JsonConvert.SerializeObject(result);
+                    return output;
                 }
             }
-            catch(Exception)
-            {
-                //testing - assuming if it doesnt find anything that's good
-                return true;
-            }
         }
-        [HttpGet("[action]")]
-        public bool CheckUserAccountEmailDoesNotExist(string email)
-        {
-            try
-            {
-                //To check if there is a user account using a specific email already exists in the database
-                using (var db = new DbModel())
-                {
-                    UserAccount userDetails = db.UserAccount.Where(x=>x.EmailAddress== email).ToList().First();
-                    if(userDetails.EmailAddress==null)
-                    {
-                        return true;
-                    }
-                    return false;
-                }
-            }
-            catch(Exception)
-            {
-                //testing - assuming if it doesnt find anything that's good
-                return true;
-            }
-        }
+
         #endregion
 
         #region EditUserAccount GET & POST Methods
@@ -88,11 +95,12 @@ namespace INDUSTRY_PROJECT.Controllers
                 return userDetails;
             }
         }
-        [HttpGet("[action]")]
 
         [HttpPost("[action]")]
-        public bool updateUserAccount()
+        public string updateUserAccount()
         {
+            bool userEmailStatus;
+            bool userUserNameStatus;
             string UserJson = null;
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
@@ -101,10 +109,56 @@ namespace INDUSTRY_PROJECT.Controllers
             UserAccount user = JsonConvert.DeserializeObject<UserAccount>(UserJson);
             using (var db = new DbModel())
             {
-                db.UserAccount.Update(user);
-                db.SaveChanges();
+                //To check if the email address has already been used in the database (will try to grab the first instance)
+                List<UserAccount> userResultList = db.UserAccount.Where(x => x.EmailAddress == user.EmailAddress && x.UserAccountID != user.UserAccountID).ToList();
+                userEmailStatus = userResultList.Count.Equals(0) ? false : true;
+                //To check if the username has already been used in the database (will try to grab the first instance)
+                List<UserAccount> userResultList2 = db.UserAccount.Where(x => x.Username == user.Username && x.UserAccountID != user.UserAccountID).ToList();
+                userUserNameStatus = userResultList2.Count.Equals(0) ? false : true;
+                //If it fails to find the same username or email, it means that it's okay to insert into the database
+                if (new[] { userUserNameStatus, userEmailStatus }.All(x => x == false))
+                {
+                    //Will insert a new user into the database
+                    db.UserAccount.Update(user);
+                    db.SaveChanges();
+                    ResponseStatus result = new ResponseStatus();
+                    result.StatusCode = 200;
+                    string output = JsonConvert.SerializeObject(result);
+                    return output;
+                }
+                else if (userUserNameStatus.Equals(true) && userEmailStatus.Equals(false))
+                {
+                    //Code 99 = The username exists but the email doesn't exist
+                    ResponseStatus result = new ResponseStatus();
+                    result.StatusCode = 99;
+                    string output = JsonConvert.SerializeObject(result);
+                    return output;
+                }
+                else if (userUserNameStatus.Equals(false) && userEmailStatus.Equals(true))
+                {
+                    //Code 98 = The username doesn't exists but the email does exist
+                    ResponseStatus result = new ResponseStatus();
+                    result.StatusCode = 98;
+                    string output = JsonConvert.SerializeObject(result);
+                    return output;
+                }
+                else if (userUserNameStatus.Equals(true) && userEmailStatus.Equals(true))
+                {
+                    //Code 97 = The username exists and the email exists
+                    ResponseStatus result = new ResponseStatus();
+                    result.StatusCode = 97;
+                    string output = JsonConvert.SerializeObject(result);
+                    return output;
+                }
+                else
+                {
+                    //Code 96 = Unknown
+                    ResponseStatus result = new ResponseStatus();
+                    result.StatusCode = 96;
+                    string output = JsonConvert.SerializeObject(result);
+                    return output;
+                }
             }
-            return true;
         }
         [HttpGet("[action]")]
         public string GetPermName(int permID)
@@ -115,6 +169,37 @@ namespace INDUSTRY_PROJECT.Controllers
                 string permName = db.Permissions.Where(x => x.PermissionID == permID).Select(x => x.PermissionName).First();
                 return permName;
             }
+        }
+        #endregion
+
+        #region ManageUserAccount GET & POST Methods
+        [HttpGet("[action]")]
+        public UserAccount SearchForUserAccount(string field)
+        {
+            //To retrieve all details of user account that has a username/email from the database
+            using (var db = new DbModel())
+            {
+                List<UserAccount> userResultList1 = db.UserAccount.Where(x => x.EmailAddress == field).ToList();
+                if(userResultList1.Count.Equals(0))
+                {
+                    List<UserAccount> userResultList2 = db.UserAccount.Where(x => x.Username == field).ToList();
+                    if(userResultList1.Count.Equals(0))
+                    {
+                        UserAccount res = db.UserAccount.Where(x => x.UserAccountID == 1).ToList().First();
+                        return res;
+                    }
+                    else
+                    {
+                        return userResultList2.First();
+                    }
+                }
+                else
+                {
+                    return userResultList1.First();
+                }
+                
+            }
+     
         }
         #endregion
 
@@ -189,7 +274,7 @@ namespace INDUSTRY_PROJECT.Controllers
         }
         #endregion
 
-        #region dashboard
+        #region Dashboard
 
         public class apiInfo
         {
