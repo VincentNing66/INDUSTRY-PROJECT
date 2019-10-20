@@ -95,7 +95,6 @@ namespace INDUSTRY_PROJECT.Controllers
                 return userDetails;
             }
         }
-        [HttpGet("[action]")]
 
         [HttpPost("[action]")]
         public string updateUserAccount()
@@ -173,6 +172,37 @@ namespace INDUSTRY_PROJECT.Controllers
         }
         #endregion
 
+        #region ManageUserAccount GET & POST Methods
+        [HttpGet("[action]")]
+        public UserAccount SearchForUserAccount(string field)
+        {
+            //To retrieve all details of user account that has a username/email from the database
+            using (var db = new DbModel())
+            {
+                List<UserAccount> userResultList1 = db.UserAccount.Where(x => x.EmailAddress == field).ToList();
+                if(userResultList1.Count.Equals(0))
+                {
+                    List<UserAccount> userResultList2 = db.UserAccount.Where(x => x.Username == field).ToList();
+                    if(userResultList1.Count.Equals(0))
+                    {
+                        UserAccount res = db.UserAccount.Where(x => x.UserAccountID == 1).ToList().First();
+                        return res;
+                    }
+                    else
+                    {
+                        return userResultList2.First();
+                    }
+                }
+                else
+                {
+                    return userResultList1.First();
+                }
+                
+            }
+     
+        }
+        #endregion
+
         #region Sample Controller
         private static string[] Summaries = new[]
         {
@@ -244,7 +274,7 @@ namespace INDUSTRY_PROJECT.Controllers
         }
         #endregion
 
-        #region dashboard
+        #region Dashboard
 
         public class apiInfo
         {

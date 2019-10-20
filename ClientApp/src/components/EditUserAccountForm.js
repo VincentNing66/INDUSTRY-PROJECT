@@ -139,9 +139,6 @@ export class EditUserAccountForm extends Component {
             window.alert("Unable to update user account. The entered password and confirm password does not match. Try again.");
         }
     }
-    handleEvent = event => {
-        alert("I was clicked");
-    };
 
     reloadPage()
     {

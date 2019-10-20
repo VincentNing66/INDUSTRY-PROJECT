@@ -34,6 +34,8 @@ export class LoginForm extends Component {
                 warningMessage += item + "\n";
             });
             alert(warningMessage);
+            document.getElementById("label_username").style.color = "red";
+            document.getElementById("label_password").style.color = "red";
             return;
         }
         //The request to get the user account where the username and password matches the input
@@ -68,11 +70,11 @@ export class LoginForm extends Component {
                         <img src={require('./img/willingwebinverse.png')} alt="Willing Web" className='image' />
                     </div>
                     <div className="container justify-content-center">
-                        <label htmlFor="username"><b>Username</b></label><br></br>
-                        <input className="inputbox" type="text" placeholder="Enter Username" id="username" required></input>
+                        <label id="label_username" htmlFor="username"><b>Username</b></label><br></br>
+                        <input className="form-control text-center" type="text" placeholder="Enter Username" id="username" required></input>
                         <br></br>
-                        <label htmlFor="password"><b>Password</b></label><br></br>
-                        <input className="inputbox" type="password" placeholder="Enter Password" id="password" required ></input>
+                        <label id="label_password" htmlFor="password"><b>Password</b></label><br></br>
+                        <input className="form-control text-center" type="password" placeholder="Enter Password" id="password" required ></input>
                         <br></br>
                         <br></br>
                         <button className="btn btn-primary button" type="button" name="login" id="login" onClick={this.userLogin}>Login</button>
