@@ -47,6 +47,10 @@ namespace INDUSTRY_PROJECT.Database
         public int PermissionsID { get; set; }
         public Permission Permissions { get; set; }
     }
+    public class ResponseStatus
+    {
+        public int StatusCode { get; set; }
+    }
 
     public class Permission
     {

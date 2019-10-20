@@ -11,6 +11,8 @@ export class EditUserAccountForm extends Component {
             userDetail: [], permName: "No Permission", loading: true, loading2: true
         };
         this.fetchData();
+        this.updateUser = this.updateUser.bind(this);
+
     }
 
     async fetchData()
@@ -23,6 +25,47 @@ export class EditUserAccountForm extends Component {
         await fetch('/api/SampleData/GetPermName?permID=' + this.state.userDetail.permissionsID)
             .then(response => response.text())
             .then(data => this.setState({ permName: data, loading: false }))
+    }
+    validateDatabaseResponse(data) {
+        var warningList = [];
+        //Code 200 = Means that username and email doesn't exist. Successful.
+        if (data.StatusCode == 200) {
+            //To display to the user that the account has been created successfully
+            alert("User acccount successfully created");
+            //To change the label colour to green
+            document.getElementById("label_username").style.color = "green";
+            document.getElementById("label_confirmPassword").style.color = "green";
+            document.getElementById("label_updatePassword").style.color = "green";
+            document.getElementById("label_emailAddress").style.color = "green";
+            document.getElementById("label_firstname").style.color = "green";
+            document.getElementById("label_lastname").style.color = "green";
+            document.getElementById("label_address").style.color = "green";
+            document.getElementById("label_permission").style.color = "green";
+            return;
+        }
+        //Code 99 = The username exists but the email doesn't exist
+        if (data.StatusCode == 99) {
+            warningList.push("The username is already associated with another user account.");
+        }
+        //Code 98 = The username doesn't exists but the email does exist
+        if (data.StatusCode == 98) {
+            warningList.push("The email address is already associated with another user account");
+        }
+        //Code 97 = The username exists and the email exists
+        if (data.StatusCode == 97) {
+            warningList.push("The username is already associated with another user account");
+            warningList.push("The email address is already associated with another user account");
+        }
+        //Code 96 = Unknown
+        if (data.StatusCode == 96) {
+            warningList.push("Unknown error");
+        }
+        //Will display a list of items that are empty
+        var warningMessage = "Unable to create user account. Please correct the following: \n";
+        warningList.forEach(function (item) {
+            warningMessage += item + "\n";
+        });
+        alert(warningMessage);
     }
     //This method is triggered when the "save" button is clicked. It sends data from the form to the database.
     async updateUser() {
@@ -79,22 +122,13 @@ export class EditUserAccountForm extends Component {
               "PermissionsId": 1
             }`;
             try {
-                fetch('api/SampleData/updateUserAccount', {
+                fetch('api/SampleData/updateUserAccount?', {
                     method: 'POST',
                     body: JsonString,
                     headers: {
                         'Content-Type': 'application/json'
                     }
-                });
-                alert("User account details sucessfully updated");
-                document.getElementById("label_username").style.color = "green";
-                document.getElementById("label_confirmPassword").style.color = "green";
-                document.getElementById("label_updatePassword").style.color = "green";
-                document.getElementById("label_emailAddress").style.color = "green";
-                document.getElementById("label_firstname").style.color = "green";
-                document.getElementById("label_lastname").style.color = "green";
-                document.getElementById("label_address").style.color = "green";
-                document.getElementById("label_permission").style.color = "green";
+                }).then(response => response.json()).then(data => this.validateDatabaseResponse(data));
             }
             catch (Exception) {
                 //Something went wrong with the API request
